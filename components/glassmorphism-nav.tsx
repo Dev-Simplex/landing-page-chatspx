@@ -120,13 +120,13 @@ export function GlassmorphismNav() {
                 href="/"
                 className="ml-2 md:ml-4 mt-0.5 flex items-center hover:scale-105 transition-transform duration-200 cursor-pointer"
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                <div className="w-11 h-11 md:w-14 md:h-14 flex items-center justify-center">
                   <Image
                     src="/images/spx-chat-logo-branca.svg"
                     alt="CHAT - SPX"
                     width={40}
                     height={40}
-                    className="w-full h-full object-contain scale-150 md:scale-[1.75]"
+                    className="w-11 h-11 md:w-14 md:h-14 object-contain scale-150 md:scale-[1.75] translate-y-0.5 [filter:drop-shadow(1px_0_0_rgba(255,255,255,0.85))_drop-shadow(-1px_0_0_rgba(255,255,255,0.85))_drop-shadow(0_1px_0_rgba(255,255,255,0.85))_drop-shadow(0_-1px_0_rgba(255,255,255,0.85))_drop-shadow(0_0_6px_rgba(0,0,0,0.45))]"
                   />
                 </div>
               </Link>

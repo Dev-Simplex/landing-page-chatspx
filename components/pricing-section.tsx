@@ -26,7 +26,7 @@ const plans = [
   {
     name: "Start",
     description: "Para equipes que estao comecando no atendimento centralizado.",
-    price: "R$ 180,00",
+    price: "R$ 280,00",
     badge: null,
     badgeIcon: null,
     icon: Rocket,
@@ -50,7 +50,7 @@ const plans = [
   {
     name: "Standard",
     description: "O equilibrio ideal entre volume, dados e automacao.",
-    price: "R$ 380,00",
+    price: "R$ 580,00",
     badge: "Mais escolhido",
     badgeIcon: Star,
     icon: Settings,
@@ -74,7 +74,7 @@ const plans = [
   {
     name: "Enterprise",
     description: "Para operacoes com alto volume e IA aplicada.",
-    price: "R$ 590,00",
+    price: "R$ 890,00",
     badge: "IA & Escala",
     badgeIcon: Sparkles,
     icon: Brain,
@@ -90,8 +90,8 @@ const plans = [
       { label: "Numeros de WhatsApp", value: "5", included: true },
       { label: "Agentes", value: "20", included: true },
       { label: "Suporte", value: "Premium (Email, Chat e WhatsApp)", included: true },
-      { label: "Dashboards", value: "10 Premium", included: true },
-      { label: "Fluxos de Atendimento", value: "4 atendimento com IA", included: true },
+      { label: "Dashboards", value: "5 Premium", included: true },
+      { label: "Fluxos de Atendimento", value: "2 com IA", included: true },
       { label: "API Personalizada", value: "Incluso", included: true },
     ],
   },
