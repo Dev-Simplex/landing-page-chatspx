@@ -17,6 +17,7 @@ export function GlassmorphismNav() {
   const [isOpen, setIsOpen] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   const [hasLoaded, setHasLoaded] = useState(false)
+  const [isOnWhiteBackground, setIsOnWhiteBackground] = useState(false)
   const lastScrollY = useRef(0)
 
   useEffect(() => {
@@ -64,6 +65,40 @@ export function GlassmorphismNav() {
 
     return () => clearTimeout(timer)
   }, []) // Removed lastScrollY dependency to prevent infinite re-renders
+
+  // Detect if header is over #features section
+  useEffect(() => {
+    const checkBackground = () => {
+      if (typeof window === "undefined") return
+
+      const navElement = document.querySelector('nav')
+      const featuresSection = document.querySelector('#features')
+      
+      if (!navElement || !featuresSection) {
+        setIsOnWhiteBackground(false)
+        return
+      }
+
+      const navRect = navElement.getBoundingClientRect()
+      const featuresRect = featuresSection.getBoundingClientRect()
+      
+      // Check if nav center is within features section
+      const navCenterY = navRect.top + navRect.height / 2
+      const isOverFeatures = navCenterY >= featuresRect.top && navCenterY <= featuresRect.bottom
+
+      setIsOnWhiteBackground(isOverFeatures)
+    }
+
+    // Check on scroll and resize
+    window.addEventListener('scroll', checkBackground, { passive: true })
+    window.addEventListener('resize', checkBackground)
+    checkBackground() // Initial check
+
+    return () => {
+      window.removeEventListener('scroll', checkBackground)
+      window.removeEventListener('resize', checkBackground)
+    }
+  }, [])
 
   const scrollToTop = () => {
     console.log("[v0] Scrolling to top")
@@ -118,15 +153,15 @@ export function GlassmorphismNav() {
               {/* Logo */}
               <Link
                 href="/"
-                className="ml-2 md:ml-4 mt-0.5 flex items-center hover:scale-105 transition-transform duration-200 cursor-pointer"
+                className="ml-4 md:ml-6 flex items-center hover:scale-105 transition-transform duration-200 cursor-pointer"
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center overflow-visible">
                   <Image
-                    src="/images/spx-chat-logo-branca.svg"
+                    src={isOnWhiteBackground ? "/images/spx-chat-logo-preta.svg" : "/images/spx-chat-logo-branca.svg"}
                     alt="CHAT - SPX"
                     width={40}
                     height={40}
-                    className="w-10 h-10 md:w-12 md:h-12 object-contain scale-150 md:scale-[1.75] translate-y-0.5 [filter:drop-shadow(1px_0_0_rgba(255,255,255,0.85))_drop-shadow(-1px_0_0_rgba(255,255,255,0.85))_drop-shadow(0_1px_0_rgba(255,255,255,0.85))_drop-shadow(0_-1px_0_rgba(255,255,255,0.85))_drop-shadow(0_0_6px_rgba(0,0,0,0.45))]"
+                    className="w-10 h-10 md:w-12 md:h-12 object-contain scale-[2] md:scale-[2.5] drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-opacity duration-300"
                   />
                 </div>
               </Link>

@@ -15,7 +15,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-black overflow-hidden">
       <main className="min-h-screen relative overflow-hidden">
         <div className="fixed inset-0 w-full h-full">
-          <Aurora colorStops={["#0ea5e9", "#2563eb", "#0ea5e9"]} amplitude={1.2} blend={0.6} speed={0.8} />
+          <Aurora colorStops={["#2dc46f", "#25a359", "#2dc46f"]} amplitude={1.2} blend={0.6} speed={0.8} />
         </div>
         <div className="relative z-10">
           <GlassmorphismNav />

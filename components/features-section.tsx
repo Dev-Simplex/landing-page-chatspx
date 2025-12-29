@@ -85,7 +85,7 @@ const AnimatedChatDemo = ({ isActive }: { isActive: boolean }) => {
           >
             <div
               className={`max-w-[80%] px-3 py-1.5 rounded-full text-xs ${
-                msg.isBot ? "bg-slate-200 text-slate-700" : "bg-blue-500 text-white"
+                msg.isBot ? "bg-slate-200 text-slate-700" : "bg-green-600 text-white"
               }`}
             >
               {msg.text}
@@ -143,7 +143,7 @@ const AnimatedPhoneDemo = ({ isActive }: { isActive: boolean }) => {
         <div
           className={`w-16 h-16 rounded-full bg-green-500 flex items-center justify-center transition-all duration-500 ${
             callState === "ringing" ? "animate-pulse scale-110" : ""
-          } ${callState === "answered" ? "bg-blue-500" : ""}`}
+          } ${callState === "answered" ? "bg-green-600" : ""}`}
         >
           <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
             <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
@@ -192,7 +192,7 @@ const AnimatedCalendarDemo = ({ isActive }: { isActive: boolean }) => {
               day === selectedDate
                 ? booked
                   ? "bg-green-500 text-white scale-110"
-                  : "bg-blue-500 text-white scale-110"
+                  : "bg-green-600 text-white scale-110"
                 : day % 7 === 0 || day % 6 === 0
                   ? "bg-slate-200 text-slate-400"
                   : "bg-white text-slate-600 hover:bg-slate-100"
@@ -241,7 +241,7 @@ const AnimatedEmailDemo = ({ isActive }: { isActive: boolean }) => {
               email.status === "replied" ? "bg-green-100" : "bg-white"
             }`}
           >
-            <div className={`w-2 h-2 rounded-full ${email.status === "replied" ? "bg-green-500" : "bg-blue-500"}`} />
+            <div className={`w-2 h-2 rounded-full ${email.status === "replied" ? "bg-green-500" : "bg-green-600"}`} />
             <span className="text-xs text-slate-700 flex-1">{email.subject}</span>
             {email.status === "replied" && (
               <svg className="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
@@ -302,7 +302,7 @@ const AnimatedLeadsDemo = ({ isActive }: { isActive: boolean }) => {
             <div className="flex-1 bg-slate-200 rounded-full h-2">
               <div
                 className={`h-2 rounded-full transition-all duration-500 ${
-                  lead.qualified ? "bg-green-500" : "bg-blue-500"
+                  lead.qualified ? "bg-green-500" : "bg-green-600"
                 }`}
                 style={{ width: `${lead.score}%` }}
               />
@@ -467,15 +467,15 @@ export function FeaturesSection() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-sm font-medium mb-6">
-              <svg className="w-4 h-4 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-700 text-sm font-medium mb-6">
+              <svg className="w-4 h-4 mr-2 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.89 1 3 1.89 3 3V7H1V9H3V15H1V17H3V21C3 22.11 3.89 23 5 23H19C20.11 23 21 22.11 21 21V17H23V15H21V9H23ZM19 9V15H5V9H19ZM7.5 11.5C7.5 10.67 8.17 10 9 10S10.5 10.67 10.5 11.5 9.83 13 9 13 7.5 12.33 7.5 11.5ZM13.5 11.5C13.5 10.67 14.17 10 15 10S16.5 10.67 16.5 11.5 15.83 13 15 13 13.5 12.33 13.5 11.5ZM12 16C13.11 16 14.08 16.59 14.71 17.5H9.29C9.92 16.59 10.89 16 12 16Z" />
               </svg>
               Auto-hospedado
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 text-balance mb-4 sm:mb-6">
               Recursos que unem canais, equipe e{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-sky-400 bg-clip-text text-transparent">IA</span>
+              <span className="bg-gradient-to-r from-green-600 to-emerald-400 bg-clip-text text-transparent">IA</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto font-light leading-relaxed">
               Centralize conversas, automatize fluxos e acompanhe tudo com relatórios e visibilidade em tempo real.
@@ -502,7 +502,7 @@ export function FeaturesSection() {
                     <feature.demo isActive={activeDemo === index || isVisible} />
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-4 group-hover:text-blue-700 transition-colors duration-300">
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-4 group-hover:text-green-600 transition-colors duration-300">
                     {feature.title}
                   </h3>
 

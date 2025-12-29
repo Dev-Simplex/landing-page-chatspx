@@ -24,6 +24,16 @@ export const metadata: Metadata = {
   description:
     "CHAT - SPX é a plataforma moderna e auto-hospedada de atendimento omnichannel, com caixa de entrada unificada, automações e IA.",
   generator: "v0.app",
+  icons: {
+    icon: [
+      {
+        url: "/logo_thumbnail.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    shortcut: "/logo_thumbnail.svg",
+    apple: "/logo_thumbnail.svg",
+  },
 }
 
 export default function RootLayout({

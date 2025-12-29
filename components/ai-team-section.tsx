@@ -169,7 +169,7 @@ export function AITeamSection() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <div
-              className={`inline-flex items-center gap-2 bg-blue-50 border border-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6 transition-all duration-1000 ${
+              className={`inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-medium mb-6 transition-all duration-1000 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
@@ -183,7 +183,7 @@ export function AITeamSection() {
               }`}
             >
               Veja a IA conduzindo{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-sky-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-green-600 to-emerald-400 bg-clip-text text-transparent">
                 atendimentos reais
               </span>
             </h2>
@@ -227,7 +227,7 @@ export function AITeamSection() {
                   isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
                 }`}
               >
-                <div className="p-4 lg:p-6 bg-blue-50 rounded-xl border-l-4 border-blue-600">
+                <div className="p-4 lg:p-6 bg-emerald-50 rounded-xl border-l-4 border-emerald-600">
                   <p className="text-slate-800 font-medium text-sm lg:text-base">
                     "Saímos de respostas lentas para atendimento imediato. A satisfação subiu e o time ganhou foco."
                   </p>
@@ -248,9 +248,9 @@ export function AITeamSection() {
                     <div className="bg-black rounded-[2rem] p-1">
                       <div className="bg-white rounded-[1.5rem] overflow-hidden">
                         {/* Status bar */}
-                        <div className="bg-blue-50 px-6 py-3 flex justify-between items-center text-sm">
+                        <div className="bg-emerald-50 px-6 py-3 flex justify-between items-center text-sm">
                           <div className="flex items-center gap-1">
-                            <div className="w-2 h-2 bg-blue-700 rounded-full"></div>
+                            <div className="w-2 h-2 bg-green-600 rounded-full"></div>
                             <span className="font-medium text-slate-700">Captain IA</span>
                           </div>
                           <div className="flex items-center gap-1 text-slate-500">
@@ -307,7 +307,7 @@ export function AITeamSection() {
                                 ))}
                               </div>
                               {message.sender === "customer" && (
-                                <div className="w-6 h-6 rounded-full bg-blue-500 ml-2 mt-1 flex-shrink-0 flex items-center justify-center text-xs text-white font-medium">
+                                <div className="w-6 h-6 rounded-full bg-green-600 ml-2 mt-1 flex-shrink-0 flex items-center justify-center text-xs text-white font-medium">
                                   C
                                 </div>
                               )}
@@ -340,11 +340,11 @@ export function AITeamSection() {
                         </div>
 
                         <div className="p-4 bg-white border-t border-slate-200">
-                          <div className="flex items-center gap-3 bg-blue-50 rounded-full px-4 py-2">
+                          <div className="flex items-center gap-3 bg-emerald-50 rounded-full px-4 py-2">
                             <span className="text-slate-500 text-sm lg:text-base flex-1">
                               Captain está respondendo...
                             </span>
-                            <div className="w-6 h-6 bg-blue-700 rounded-full flex items-center justify-center">
+                            <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center">
                               <Zap className="w-3 h-3 text-white" />
                             </div>
                           </div>
