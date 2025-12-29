@@ -21,6 +21,7 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { TruckButton } from "@/components/truck-button"
 
 const plans = [
   {
@@ -30,6 +31,8 @@ const plans = [
     badge: null,
     badgeIcon: null,
     icon: Rocket,
+    truckColor: "#0ea5e9",
+    truckColorLight: "#38bdf8",
     tone: {
       accent: "text-sky-400",
       border: "border-sky-400/30",
@@ -54,6 +57,8 @@ const plans = [
     badge: "Mais escolhido",
     badgeIcon: Star,
     icon: Settings,
+    truckColor: "#3b82f6",
+    truckColorLight: "#60a5fa",
     tone: {
       accent: "text-blue-400",
       border: "border-blue-400/30",
@@ -78,6 +83,8 @@ const plans = [
     badge: "IA & Escala",
     badgeIcon: Sparkles,
     icon: Brain,
+    truckColor: "#6366f1",
+    truckColorLight: "#818cf8",
     tone: {
       accent: "text-indigo-400",
       border: "border-indigo-400/30",
@@ -272,23 +279,16 @@ export function PricingSection() {
                 })}
               </div>
 
-              <Button
-                asChild
-                size="lg"
-                className={`mt-8 rounded-full px-6 py-3 text-sm sm:text-base font-medium transition-all duration-200 ease-in-out active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black/80 group ${plan.tone.button}`}
-              >
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                  <Image
-                    src="/whatsapp.png"
-                    alt=""
-                    width={16}
-                    height={16}
-                    className="h-4 w-4 invert"
-                  />
-                  Quero esse plano
-                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-                </a>
-              </Button>
+              <div className="flex justify-center mt-8">
+                <TruckButton
+                  defaultText="Quero esse plano"
+                  successText="Pedido enviado!"
+                  redirectUrl={whatsappLink}
+                  primaryColor={plan.truckColor}
+                  primaryLightColor={plan.truckColorLight}
+                  className="truck-button-custom"
+                />
+              </div>
             </div>
           ))}
         </div>
