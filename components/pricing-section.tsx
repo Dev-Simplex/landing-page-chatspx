@@ -26,7 +26,7 @@ import { TruckButton } from "@/components/truck-button"
 const plans = [
   {
     name: "Start",
-    description: "Para equipes que estao comecando no atendimento centralizado.",
+    description: "Para equipes que est\u00e3o come\u00e7ando no atendimento centralizado.",
     price: "R$ 280,00",
     badge: null,
     badgeIcon: null,
@@ -42,17 +42,17 @@ const plans = [
         "bg-emerald-500 text-white hover:bg-emerald-400 focus-visible:ring-emerald-400 hover:shadow-[0_0_20px_-8px_rgba(77,217,138,0.6)]",
     },
     features: [
-      { label: "Numeros de WhatsApp", value: "2", included: true },
+      { label: "N\u00fameros de WhatsApp", value: "2", included: true },
       { label: "Agentes", value: "5", included: true },
-      { label: "Suporte", value: "Basico (Email e Chat)", included: true },
-      { label: "Dashboards", value: "1 Basico", included: true },
-      { label: "Fluxos de Atendimento", value: "Nao incluso", included: false },
-      { label: "API Personalizada", value: "Nao incluso", included: false },
+      { label: "Suporte", value: "B\u00e1sico (Email e Chat)", included: true },
+      { label: "Dashboards", value: "1 B\u00e1sico", included: true },
+      { label: "Fluxos de Atendimento", value: "N\u00e3o incluso", included: false },
+      { label: "API Personalizada", value: "N\u00e3o incluso", included: false },
     ],
   },
   {
     name: "Standard",
-    description: "O equilibrio ideal entre volume, dados e automacao.",
+    description: "O equil\u00edbrio ideal entre volume, dados e automa\u00e7\u00e3o.",
     price: "R$ 580,00",
     badge: "Mais escolhido",
     badgeIcon: Star,
@@ -68,17 +68,17 @@ const plans = [
         "bg-green-600 text-white hover:bg-green-500 focus-visible:ring-green-500 hover:shadow-[0_0_20px_-8px_rgba(45,196,111,0.6)]",
     },
     features: [
-      { label: "Numeros de WhatsApp", value: "3", included: true },
+      { label: "N\u00fameros de WhatsApp", value: "3", included: true },
       { label: "Agentes", value: "10", included: true },
-      { label: "Suporte", value: "Avancado (Email e Chat)", included: true },
-      { label: "Dashboards", value: "2 Basicos", included: true },
+      { label: "Suporte", value: "Avan\u00e7ado (Email e Chat)", included: true },
+      { label: "Dashboards", value: "2 B\u00e1sicos", included: true },
       { label: "Fluxos de Atendimento", value: "1 para atendimento", included: true },
-      { label: "API Personalizada", value: "Nao incluso", included: false },
+      { label: "API Personalizada", value: "N\u00e3o incluso", included: false },
     ],
   },
   {
     name: "Enterprise",
-    description: "Para operacoes com alto volume e IA aplicada.",
+    description: "Para opera\u00e7\u00f5es com alto volume e IA aplicada.",
     price: "R$ 890,00",
     badge: "IA & Escala",
     badgeIcon: Sparkles,
@@ -94,7 +94,7 @@ const plans = [
         "bg-emerald-700 text-white hover:bg-emerald-600 focus-visible:ring-emerald-600 hover:shadow-[0_0_20px_-8px_rgba(37,163,89,0.6)]",
     },
     features: [
-      { label: "Numeros de WhatsApp", value: "5", included: true },
+      { label: "N\u00fameros de WhatsApp", value: "5", included: true },
       { label: "Agentes", value: "20", included: true },
       { label: "Suporte", value: "Premium (Email, Chat e WhatsApp)", included: true },
       { label: "Dashboards", value: "5 Premium", included: true },
@@ -106,7 +106,7 @@ const plans = [
 
 const addOns = [
   {
-    name: "Numeros de WhatsApp",
+    name: "N\u00fameros de WhatsApp",
     price: "R$ 69,90",
     detail: "Mensal",
     icon: Smartphone,
@@ -124,7 +124,7 @@ const addOns = [
   {
     name: "Fluxo de IA",
     price: "R$ 120,00",
-    detail: "Hora tecnica",
+    detail: "Hora t\u00e9cnica",
     icon: Bot,
     tone: "text-green-500",
     glow: "hover:border-green-500/40 hover:shadow-[0_0_20px_-12px_rgba(45,196,111,0.45)]",
@@ -132,7 +132,7 @@ const addOns = [
   {
     name: "Dashboards",
     price: "R$ 1.200,00",
-    detail: "Unico por dashboard",
+    detail: "\u00danico por dashboard",
     icon: BarChart3,
     tone: "text-emerald-400",
     glow: "hover:border-emerald-400/40 hover:shadow-[0_0_20px_-12px_rgba(77,217,138,0.45)]",
@@ -140,7 +140,7 @@ const addOns = [
   {
     name: "Fluxos de Atendimento",
     price: "R$ 520,00",
-    detail: "Unico por fluxo",
+    detail: "\u00danico por fluxo",
     icon: Workflow,
     tone: "text-emerald-600",
     glow: "hover:border-emerald-600/40 hover:shadow-[0_0_20px_-12px_rgba(37,163,89,0.45)]",
@@ -150,7 +150,7 @@ const addOns = [
 const whatsappLink = "https://wa.me/556696571379"
 
 const featureIconMap: Record<string, LucideIcon> = {
-  "Numeros de WhatsApp": Smartphone,
+  "N\u00fameros de WhatsApp": Smartphone,
   Agentes: Users,
   Suporte: Headphones,
   Dashboards: BarChart3,
@@ -210,13 +210,13 @@ export function PricingSection() {
         <div className="text-center mb-12 sm:mb-16">
           <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/80 text-sm font-medium mb-6">
             <Sparkles className="h-4 w-4" />
-            Planos e precos
+            Planos e pre&ccedil;os
           </div>
           <h2 className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-4 text-balance">
             Planos que crescem com o seu atendimento
           </h2>
           <p className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out text-base sm:text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-            Escolha o plano ideal e adicione recursos conforme sua operacao evolui.
+            Escolha o plano ideal e adicione recursos conforme sua opera&ccedil;&atilde;o evolui.
           </p>
         </div>
 
@@ -253,7 +253,7 @@ export function PricingSection() {
               <p className="text-sm text-white/70 mb-6">{plan.description}</p>
               <div className="flex items-end gap-2 mb-6">
                 <span className="text-3xl sm:text-4xl font-bold text-white">{plan.price}</span>
-                <span className="text-sm text-white/60">/mes</span>
+                <span className="text-sm text-white/60">/m&ecirc;s</span>
               </div>
 
               <div className="space-y-3 flex-1">
@@ -297,7 +297,7 @@ export function PricingSection() {
           <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out text-center mb-6">
             <h3 className="text-2xl sm:text-3xl font-semibold text-white">Adicionais</h3>
             <p className="text-sm text-white/60 mt-2">
-              Itens habilitados na cobranca mediante autorizacao do cliente.
+              Itens habilitados na cobran&ccedil;a mediante autoriza&ccedil;&atilde;o do cliente.
             </p>
           </div>
 
@@ -318,7 +318,7 @@ export function PricingSection() {
           </div>
 
           <p className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out text-xs text-white/50 text-center mt-6">
-            Valores adicionais sao habilitados mediante autorizacao do cliente.
+            Valores adicionais s&atilde;o habilitados mediante autoriza&ccedil;&atilde;o do cliente.
           </p>
         </div>
       </div>

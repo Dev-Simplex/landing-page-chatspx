@@ -139,35 +139,35 @@ export function GlassmorphismNav() {
   return (
     <>
       <nav
-        className={`fixed top-4 md:top-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
-          isVisible ? "translate-y-0 opacity-100" : "-translate-y-20 md:-translate-y-24 opacity-0"
+        className={`fixed top-4 lg:top-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
+          isVisible ? "translate-y-0 opacity-100" : "-translate-y-20 lg:-translate-y-24 opacity-0"
         } ${hasLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
         style={{
           transition: hasLoaded ? "all 0.5s ease-out" : "opacity 0.8s ease-out, transform 0.8s ease-out",
         }}
       >
         {/* Main Navigation */}
-        <div className="w-[90vw] max-w-xs md:max-w-4xl mx-auto">
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 md:px-6 md:py-1">
+        <div className="w-[90vw] max-w-xs lg:max-w-4xl mx-auto">
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 lg:px-6 lg:py-1">
             <div className="flex items-center justify-between">
               {/* Logo */}
               <Link
                 href="/"
-                className="ml-4 md:ml-6 flex items-center hover:scale-105 transition-transform duration-200 cursor-pointer"
+                className="ml-4 lg:ml-6 flex items-center hover:scale-105 transition-transform duration-200 cursor-pointer"
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center overflow-visible">
+                <div className="w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center overflow-visible">
                   <Image
                     src={isOnWhiteBackground ? "/images/spx-chat-logo-preta.svg" : "/images/spx-chat-logo-branca.svg"}
                     alt="CHAT - SPX"
                     width={40}
                     height={40}
-                    className="w-10 h-10 md:w-12 md:h-12 object-contain scale-[2] md:scale-[2.5] drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-opacity duration-300"
+                    className="w-10 h-10 lg:w-12 lg:h-12 object-contain scale-[2] lg:scale-[2.5] drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-opacity duration-300"
                   />
                 </div>
               </Link>
 
               {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center space-x-8">
+              <div className="hidden lg:flex items-center space-x-8">
                 {navigation.map((item) =>
                   item.href.startsWith("/") ? (
                     <Link
@@ -190,7 +190,7 @@ export function GlassmorphismNav() {
               </div>
 
               {/* Desktop CTA Button */}
-              <div className="hidden md:block">
+              <div className="hidden lg:block">
                 <a
                   href={whatsappLink}
                   target="_blank"
@@ -206,7 +206,7 @@ export function GlassmorphismNav() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="md:hidden text-white hover:scale-110 transition-transform duration-200 cursor-pointer"
+                className="lg:hidden text-white hover:scale-110 transition-transform duration-200 cursor-pointer"
               >
                 <div className="relative w-6 h-6">
                   <Menu
@@ -227,7 +227,7 @@ export function GlassmorphismNav() {
           </div>
         </div>
 
-        <div className="md:hidden relative">
+        <div className="lg:hidden relative">
           {/* Backdrop overlay */}
           <div
             className={`fixed inset-0 bg-black/20 backdrop-blur-sm transition-all duration-300 ${

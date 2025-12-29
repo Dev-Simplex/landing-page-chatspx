@@ -6,23 +6,27 @@ export function InstagramServiceSection() {
 
   const benefits = [
     {
-      title: "Agendamentos de serviço",
+      title: "Agendamentos de servi\u00e7o",
       description:
-        "O CHAT - SPX agenda serviços e envia confirmações em site, telefone e redes sociais, conforme seu fluxo",
+        "O CHAT - SPX agenda servi\u00e7os e envia confirma\u00e7\u00f5es em site, telefone e redes sociais, conforme seu fluxo",
     },
     {
-      title: "Consulta de peças",
-      description: "Responde sobre disponibilidade, preços e prazos com base no estoque em tempo real",
+      title: "Consulta de pe\u00e7as",
+      description: "Responde sobre disponibilidade, pre\u00e7os e prazos com base no estoque em tempo real",
     },
     {
-      title: "Gestão de pedidos",
-      description: "Processa pedidos e envia atualizações sem intervenção humana, integrado aos seus sistemas",
+      title: "Gest\u00e3o de pedidos",
+      description:
+        "Processa pedidos e envia atualiza\u00e7\u00f5es sem interven\u00e7\u00e3o humana, integrado aos seus sistemas",
     },
     {
-      title: "Atualizações ao cliente",
-      description: "Mantém clientes informados sobre status do serviço e peças 24/7 em qualquer canal",
+      title: "Atualiza\u00e7\u00f5es ao cliente",
+      description:
+        "Mant\u00e9m clientes informados sobre status do servi\u00e7o e pe\u00e7as 24/7 em qualquer canal",
     },
   ]
+
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(

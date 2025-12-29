@@ -2,8 +2,8 @@ import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
 export const metadata = {
-  title: "Termos de Servico | CHAT - SPX",
-  description: "Termos de servico da plataforma CHAT - SPX.",
+  title: "Termos de Servi\u00e7o | CHAT - SPX",
+  description: "Termos de servi\u00e7o da plataforma CHAT - SPX.",
 }
 
 export default function TermosDeServicoPage() {
@@ -20,88 +20,89 @@ export default function TermosDeServicoPage() {
               Voltar
             </Link>
             <p className="text-sm uppercase tracking-widest text-muted-foreground">Legal</p>
-            <h1 className="text-3xl font-semibold sm:text-4xl">Termos de Servico</h1>
+            <h1 className="text-3xl font-semibold sm:text-4xl">Termos de Servi&ccedil;o</h1>
             <p className="text-base text-muted-foreground">
-              Ao acessar ou usar o CHAT - SPX, voce concorda com estes termos. Leia com atencao.
+              Ao acessar ou usar o CHAT - SPX, voc&ecirc; concorda com estes termos. Leia com aten&ccedil;&atilde;o.
             </p>
           </header>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold">1. Aceitacao</h2>
+            <h2 className="text-xl font-semibold">1. Aceita&ccedil;&atilde;o</h2>
             <p className="text-muted-foreground">
-              Estes termos regulam o uso da plataforma CHAT - SPX. Se voce nao concorda, nao utilize o servico.
+              Estes termos regulam o uso da plataforma CHAT - SPX. Se voc&ecirc; n&atilde;o concorda, n&atilde;o utilize o
+              servi&ccedil;o.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold">2. Uso do servico</h2>
+            <h2 className="text-xl font-semibold">2. Uso do servi&ccedil;o</h2>
             <p className="text-muted-foreground">
-              Voce deve usar o CHAT - SPX de forma legal e em conformidade com as politicas aplicaveis. E proibido
-              utilizar o servico para atividades ilicitas, violacoes de direitos de terceiros ou envio de conteudo
-              malicioso.
+              Voc&ecirc; deve usar o CHAT - SPX de forma legal e em conformidade com as pol&iacute;ticas aplic&aacute;veis. &Eacute;
+              proibido utilizar o servi&ccedil;o para atividades il&iacute;citas, viola&ccedil;&otilde;es de direitos de
+              terceiros ou envio de conte&uacute;do malicioso.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold">3. Contas e seguranca</h2>
+            <h2 className="text-xl font-semibold">3. Contas e seguran&ccedil;a</h2>
             <p className="text-muted-foreground">
-              Voce e responsavel por manter a confidencialidade das credenciais de acesso e por toda atividade realizada
-              em sua conta.
+              Voc&ecirc; &eacute; respons&aacute;vel por manter a confidencialidade das credenciais de acesso e por toda atividade
+              realizada em sua conta.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold">4. Conteudo e dados</h2>
+            <h2 className="text-xl font-semibold">4. Conte&uacute;do e dados</h2>
             <p className="text-muted-foreground">
-              O conteudo enviado por voce permanece de sua responsabilidade. O CHAT - SPX pode processar dados para
-              viabilizar o funcionamento do servico, conforme descrito na Politica de Privacidade.
+              O conte&uacute;do enviado por voc&ecirc; permanece de sua responsabilidade. O CHAT - SPX pode processar dados para
+              viabilizar o funcionamento do servi&ccedil;o, conforme descrito na Pol&iacute;tica de Privacidade.
             </p>
           </section>
 
           <section className="space-y-4">
             <h2 className="text-xl font-semibold">5. Disponibilidade e suporte</h2>
             <p className="text-muted-foreground">
-              Empregamos esforcos razoaveis para manter o servico disponivel, mas podem ocorrer interrupcoes para
-              manutencao ou por fatores externos.
+              Empregamos esfor&ccedil;os razo&aacute;veis para manter o servi&ccedil;o dispon&iacute;vel, mas podem ocorrer
+              interrup&ccedil;&otilde;es para manuten&ccedil;&atilde;o ou por fatores externos.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold">6. Planos e cobranca</h2>
+            <h2 className="text-xl font-semibold">6. Planos e cobran&ccedil;a</h2>
             <p className="text-muted-foreground">
-              Quando aplicavel, planos, limites e condicoes comerciais serao apresentados de forma transparente durante a
-              contratacao.
+              Quando aplic&aacute;vel, planos, limites e condi&ccedil;&otilde;es comerciais ser&atilde;o apresentados de forma
+              transparente durante a contrata&ccedil;&atilde;o.
             </p>
           </section>
 
           <section className="space-y-4">
             <h2 className="text-xl font-semibold">7. Propriedade intelectual</h2>
             <p className="text-muted-foreground">
-              O CHAT - SPX e seus materiais sao protegidos por leis de propriedade intelectual. Nenhuma parte do servico
-              pode ser copiada ou distribuida sem autorizacao.
+              O CHAT - SPX e seus materiais s&atilde;o protegidos por leis de propriedade intelectual. Nenhuma parte do
+              servi&ccedil;o pode ser copiada ou distribu&iacute;da sem autoriza&ccedil;&atilde;o.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-xl font-semibold">8. Limitacao de responsabilidade</h2>
+            <h2 className="text-xl font-semibold">8. Limita&ccedil;&atilde;o de responsabilidade</h2>
             <p className="text-muted-foreground">
-              Na extensao permitida pela lei, nao nos responsabilizamos por perdas indiretas ou lucros cessantes
-              decorrentes do uso do servico.
+              Na extens&atilde;o permitida pela lei, n&atilde;o nos responsabilizamos por perdas indiretas ou lucros
+              cessantes decorrentes do uso do servi&ccedil;o.
             </p>
           </section>
 
           <section className="space-y-4">
             <h2 className="text-xl font-semibold">9. Encerramento</h2>
             <p className="text-muted-foreground">
-              Voce pode encerrar o uso a qualquer momento. Podemos suspender ou encerrar o acesso em caso de violacao
-              destes termos.
+              Voc&ecirc; pode encerrar o uso a qualquer momento. Podemos suspender ou encerrar o acesso em caso de
+              viola&ccedil;&atilde;o destes termos.
             </p>
           </section>
 
           <section className="space-y-4">
             <h2 className="text-xl font-semibold">10. Contato</h2>
             <p className="text-muted-foreground">
-              Em caso de duvidas, utilize a Central de Ajuda ou outros canais oficiais de atendimento.
+              Em caso de d&uacute;vidas, utilize a Central de Ajuda ou outros canais oficiais de atendimento.
             </p>
           </section>
         </div>
