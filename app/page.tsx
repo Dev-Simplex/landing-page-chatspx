@@ -4,6 +4,7 @@ import { ProblemSolutionSection } from "@/components/problem-solution-section"
 import Aurora from "@/components/Aurora"
 import { FeaturesSection } from "@/components/features-section"
 import { AITeamSection } from "@/components/ai-team-section"
+import { SystemScreensCarouselSection } from "@/components/system-screens-carousel"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { PricingSection } from "@/components/pricing-section"
 import { ROICalculatorSection } from "@/components/roi-calculator-section"
@@ -23,6 +24,7 @@ export default function HomePage() {
           <ProblemSolutionSection />
           <FeaturesSection />
           <AITeamSection />
+          <SystemScreensCarouselSection />
           <TestimonialsSection />
           <PricingSection />
           <ROICalculatorSection />

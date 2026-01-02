@@ -1,0 +1,168 @@
+.section {
+  --card-width: 300px;
+  --card-height: 420px;
+  --carousel-radius: 380px;
+  --transition-speed: 0.45s;
+}
+
+.carouselStage {
+  position: relative;
+  height: 520px;
+  perspective: 1600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  touch-action: pan-y;
+  margin-bottom: 2rem;
+}
+
+.dragging {
+  cursor: grabbing;
+}
+
+.carousel {
+  position: relative;
+  width: var(--carousel-radius);
+  height: var(--carousel-radius);
+  transform-style: preserve-3d;
+  transition: transform var(--transition-speed) ease;
+  will-change: transform;
+}
+
+.card {
+  position: absolute;
+  width: var(--card-width);
+  height: var(--card-height);
+  left: 50%;
+  top: 50%;
+  margin-left: calc(var(--card-width) / -2);
+  margin-top: calc(var(--card-height) / -2);
+  transform-style: preserve-3d;
+  transform: rotateY(var(--angle)) translateZ(var(--carousel-radius));
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  appearance: none;
+  will-change: transform;
+}
+
+.card:focus-visible {
+  outline: 2px solid rgba(45, 196, 111, 0.6);
+  outline-offset: 6px;
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--flip-angle, 0deg)) translateZ(var(--lift, 0px));
+  transition: transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.card:hover .cardInner {
+  --lift: 14px;
+}
+
+.flipped {
+  --flip-angle: 180deg;
+}
+
+.cardFace {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transform: translateZ(0.01px);
+}
+
+.cardFront {
+  background: linear-gradient(150deg, rgba(18, 32, 26, 0.92), rgba(6, 12, 10, 0.98));
+  border: 1px solid rgba(45, 196, 111, 0.35);
+}
+
+.cardBack {
+  background: linear-gradient(150deg, rgba(12, 18, 16, 0.96), rgba(8, 14, 12, 0.98));
+  border: 1px solid rgba(45, 196, 111, 0.22);
+  transform: rotateY(180deg);
+}
+
+.screenFrame {
+  position: relative;
+  margin-top: 1rem;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.screenImage {
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+  image-rendering: auto;
+  backface-visibility: hidden;
+}
+
+.screenGlare {
+  display: none;
+}
+
+.scanLines {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .section {
+    --card-width: 260px;
+    --card-height: 380px;
+    --carousel-radius: 320px;
+  }
+
+  .carouselStage {
+    height: 460px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    --card-width: 230px;
+    --card-height: 340px;
+    --carousel-radius: 260px;
+  }
+
+  .carouselStage {
+    height: 400px;
+  }
+}
+
+@media (max-width: 520px) {
+  .section {
+    --card-width: 210px;
+    --card-height: 320px;
+    --carousel-radius: 240px;
+  }
+
+  .carouselStage {
+    height: 360px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel,
+  .card,
+  .cardInner {
+    transition: none;
+  }
+}
