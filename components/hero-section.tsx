@@ -1,7 +1,6 @@
 ﻿"use client"
 
 import { useEffect, useState } from "react"
-import { DotLottieReact } from "@lottiefiles/dotlottie-react"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import RotatingText from "./RotatingText"
@@ -81,15 +80,18 @@ export function HeroSection() {
   useEffect(() => {
     if (!isDemoOpen) return
 
+    const previousOverflow = document.body.style.overflow
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setIsDemoOpen(false)
       }
     }
 
+    document.body.style.overflow = "hidden"
     document.addEventListener("keydown", handleKeyDown)
 
     return () => {
+      document.body.style.overflow = previousOverflow
       document.removeEventListener("keydown", handleKeyDown)
     }
   }, [isDemoOpen])
@@ -238,43 +240,54 @@ export function HeroSection() {
       </div>
     
       {isDemoOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-          <button
-            type="button"
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        <div
+          className="fixed inset-0 z-50 overflow-hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Demonstra&ccedil;&atilde;o imersiva"
+        >
+          <div className="absolute inset-0 bg-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-neutral-950/80 to-black"></div>
+          <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl animate-float-slow"></div>
+          <div className="absolute -bottom-48 -left-48 h-[28rem] w-[28rem] rounded-full bg-sky-500/10 blur-3xl animate-float-medium"></div>
+          <div
+            className="relative z-10 flex h-full w-full items-center justify-center px-4 py-10"
             onClick={() => setIsDemoOpen(false)}
-            aria-label="Fechar modal"
-          />
-          <div className="relative w-full max-w-md rounded-3xl border border-white/20 bg-black/80 p-6 sm:p-8 shadow-2xl">
-            <button
-              type="button"
-              onClick={() => setIsDemoOpen(false)}
-              aria-label="Fechar modal"
-              className="absolute right-4 top-4 rounded-full p-2 text-white/70 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+          >
+            <div
+              className="w-full max-w-5xl animate-fade-in"
+              onClick={(event) => event.stopPropagation()}
             >
-              <span aria-hidden="true" className="text-xl leading-none">
-                &times;
-              </span>
-            </button>
-            <div className="h-64 w-64 sm:h-72 sm:w-72 mr-auto ml-1 sm:ml-2">
-              <DotLottieReact
-                src="/Maintenance%20web.lottie"
-                loop
-                autoplay
-                className="h-full w-full"
-              />
-            </div>
-            <h3 className="mt-4 text-center text-2xl font-semibold text-white">Em desenvolvimento</h3>
-            <p className="mt-2 text-center text-sm text-white/70">Estamos preparando esta demonstra&ccedil;&atilde;o.</p>
-            <div className="mt-6 flex justify-center">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setIsDemoOpen(false)}
-                className="rounded-full px-6"
-              >
-                Fechar
-              </Button>
+              <div className="flex justify-center">
+                <div className="inline-flex overflow-hidden rounded-[1.75rem] border border-white/10 shadow-[0_0_90px_rgba(16,185,129,0.25)]">
+                  <video
+                    className="block max-h-[78vh] w-auto max-w-[90vw] object-contain"
+                    src="/demonstracao.mp4"
+                    controls
+                    autoPlay
+                    playsInline
+                    preload="metadata"
+                  >
+                    Seu navegador n&atilde;o suporta o v&iacute;deo.
+                  </video>
+                </div>
+              </div>
+              <div className="mt-6 flex flex-col items-center justify-between gap-4 text-white/70 sm:flex-row">
+                <div className="text-xs uppercase tracking-[0.35em] text-white/50">
+                  Demonstra&ccedil;&atilde;o imersiva
+                </div>
+                <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-white/60">
+                  <span>Pressione Esc para fechar</span>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setIsDemoOpen(false)}
+                    className="rounded-full px-6 cursor-pointer w-full sm:w-auto"
+                  >
+                    Fechar demonstra&ccedil;&atilde;o
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
