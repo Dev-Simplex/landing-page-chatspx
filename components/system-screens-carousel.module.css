@@ -1,4 +1,5 @@
 .section {
+  --perspective: 1200px;
   --card-width: 300px;
   --card-height: 420px;
   --carousel-radius: 380px;
@@ -8,13 +9,19 @@
 .carouselStage {
   position: relative;
   height: 520px;
-  perspective: 1600px;
+  perspective: var(--perspective);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: grab;
   touch-action: pan-y;
   margin-bottom: 2rem;
+  z-index: 5;
+  user-select: none;
+}
+
+.carouselStage * {
+  user-select: none;
 }
 
 .dragging {
@@ -27,7 +34,6 @@
   height: var(--carousel-radius);
   transform-style: preserve-3d;
   transition: transform var(--transition-speed) ease;
-  will-change: transform;
 }
 
 .card {
@@ -46,8 +52,51 @@
   border: none;
   padding: 0;
   appearance: none;
-  will-change: transform;
 }
+
+.activeOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 12;
+}
+
+.activeCard {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(150deg, rgba(18, 32, 26, 0.92), rgba(6, 12, 10, 0.98));
+  border: 1px solid rgba(45, 196, 111, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  transform-origin: center;
+}
+
+.activeCardBack {
+  background: linear-gradient(150deg, rgba(12, 18, 16, 0.96), rgba(8, 14, 12, 0.98));
+  border: 1px solid rgba(45, 196, 111, 0.22);
+}
+
+.activeFrame {
+  position: relative;
+  margin-top: 1rem;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  width: 100%;
+  aspect-ratio: 1905 / 943;
+}
+
+.activeImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 
 .card:focus-visible {
   outline: 2px solid rgba(45, 196, 111, 0.6);
@@ -59,14 +108,9 @@
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transform: rotateY(var(--flip-angle, 0deg)) translateZ(var(--lift, 0px));
+  transform: rotateY(var(--flip-angle, 0deg));
   transition: transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.2);
-  will-change: transform;
   backface-visibility: hidden;
-}
-
-.card:hover .cardInner {
-  --lift: 14px;
 }
 
 .flipped {
@@ -80,9 +124,8 @@
   overflow: hidden;
   backface-visibility: hidden;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  transform: translateZ(0.01px);
+  -webkit-font-smoothing: auto;
+  text-rendering: auto;
 }
 
 .cardFront {
@@ -104,7 +147,164 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: #ffffff;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1905 / 943;
+}
+
+.zoomButton {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f172a;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+  cursor: pointer;
+  z-index: 2;
+}
+
+.zoomButton:hover {
+  background: #ffffff;
+}
+
+.zoomIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.carouselControls {
+  position: relative;
+  z-index: 30;
+  pointer-events: auto;
+}
+
+.zoomOverlay {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.18), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(56, 189, 248, 0.14), transparent 40%),
+    rgba(2, 6, 23, 0.88);
+  backdrop-filter: blur(10px) saturate(1.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  z-index: 60;
+  animation: zoomOverlayFade 180ms ease-out;
+}
+
+.zoomPanel {
+  width: min(96vw, 1200px);
+  max-height: min(92vh, 860px);
+  background: linear-gradient(145deg, rgba(9, 15, 20, 0.98), rgba(3, 6, 10, 0.98));
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow:
+    0 40px 120px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(56, 189, 248, 0.08);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: zoomPanelRise 220ms ease-out;
+}
+
+.zoomHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  padding: 4px 4px 0;
+}
+
+.zoomTitle {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.zoomClose {
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(15, 23, 42, 0.6);
+  color: #e2e8f0;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
+}
+
+.zoomClose:hover {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-1px);
+}
+
+.zoomImageWrap {
+  background: linear-gradient(180deg, rgba(248, 250, 252, 1), rgba(241, 245, 249, 1));
+  border-radius: 14px;
+  padding: 16px;
+  overflow: auto;
+  max-height: min(70vh, 720px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+.zoomImage {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  transform-origin: center;
+  transition: transform 160ms ease;
+}
+
+.zoomControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  align-self: center;
+}
+
+.zoomControlButton {
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(15, 23, 42, 0.6);
+  color: #e2e8f0;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
+}
+
+.zoomControlButton:hover {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-1px);
+}
+
+.zoomLevel {
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  min-width: 64px;
+  text-align: center;
 }
 
 .screenImage {
@@ -164,5 +364,25 @@
   .card,
   .cardInner {
     transition: none;
+  }
+}
+
+@keyframes zoomOverlayFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomPanelRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

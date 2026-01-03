@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, Minus, Plus, X, ZoomIn } from "lucide-react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import styles from "./system-screens-carousel.module.css"
 
@@ -72,9 +72,11 @@ const normalizeIndex = (index: number, total: number) => ((index % total) + tota
 
 export function SystemScreensCarouselSection() {
   const carouselRef = useRef<HTMLDivElement | null>(null)
+  const stageRef = useRef<HTMLDivElement | null>(null)
   const thetaRef = useRef(0)
   const dragState = useRef({
     isDragging: false,
+    isPointerDown: false,
     startX: 0,
     startTheta: 0,
     moved: false,
@@ -86,6 +88,17 @@ export function SystemScreensCarouselSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null)
   const [isDragging, setIsDragging] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [isFlipping, setIsFlipping] = useState(false)
+  const [zoomedScreen, setZoomedScreen] = useState<(typeof screens)[number] | null>(null)
+  const [zoomLevel, setZoomLevel] = useState(1)
+  const [overlayScale, setOverlayScale] = useState(1)
+  const animationTimeoutRef = useRef<number | null>(null)
+  const flipTimeoutRef = useRef<number | null>(null)
+  const activeScreen = screens[currentIndex]
+  const isFlipped = flippedIndex === currentIndex
+  const showFrontOverlay = !isDragging && !isAnimating && !isFlipping && !isFlipped
+  const showBackOverlay = !isDragging && !isAnimating && !isFlipping && isFlipped
 
   const cardAngles = useMemo(() => screens.map((_, index) => index * anglePerCard), [anglePerCard])
 
@@ -97,27 +110,107 @@ export function SystemScreensCarouselSection() {
     }
   }, [currentIndex, anglePerCard])
 
+  useEffect(() => {
+    return () => {
+      if (animationTimeoutRef.current) {
+        window.clearTimeout(animationTimeoutRef.current)
+      }
+      if (flipTimeoutRef.current) {
+        window.clearTimeout(flipTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const updateScale = () => {
+      if (!stageRef.current) return
+      const computed = getComputedStyle(stageRef.current)
+      const perspective = parseFloat(computed.getPropertyValue("--perspective")) || 1200
+      const radius = parseFloat(computed.getPropertyValue("--carousel-radius")) || 380
+      const scale = perspective / (perspective - radius)
+      setOverlayScale(Number.isFinite(scale) ? scale : 1)
+    }
+    updateScale()
+    window.addEventListener("resize", updateScale)
+    return () => window.removeEventListener("resize", updateScale)
+  }, [])
+
+  useEffect(() => {
+    if (!zoomedScreen) return
+    const previousBodyOverflow = document.body.style.overflow
+    const previousBodyPadding = document.body.style.paddingRight
+    const previousHtmlOverflow = document.documentElement.style.overflow
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth
+    document.body.style.overflow = "hidden"
+    document.documentElement.style.overflow = "hidden"
+    if (scrollBarWidth > 0) {
+      document.body.style.paddingRight = `${scrollBarWidth}px`
+    }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setZoomedScreen(null)
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown)
+    return () => {
+      document.body.style.overflow = previousBodyOverflow
+      document.body.style.paddingRight = previousBodyPadding
+      document.documentElement.style.overflow = previousHtmlOverflow
+      document.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [zoomedScreen])
+
+  const startAnimationLock = () => {
+    if (animationTimeoutRef.current) {
+      window.clearTimeout(animationTimeoutRef.current)
+    }
+    setIsAnimating(true)
+    animationTimeoutRef.current = window.setTimeout(() => {
+      setIsAnimating(false)
+      animationTimeoutRef.current = null
+    }, 500)
+  }
+
+  const startFlipLock = () => {
+    if (flipTimeoutRef.current) {
+      window.clearTimeout(flipTimeoutRef.current)
+    }
+    setIsFlipping(true)
+    flipTimeoutRef.current = window.setTimeout(() => {
+      setIsFlipping(false)
+      flipTimeoutRef.current = null
+    }, 650)
+  }
+
   const snapToNearest = () => {
     const nearestIndex = normalizeIndex(Math.round(-thetaRef.current / anglePerCard), totalCards)
+    const snappedTheta = -nearestIndex * anglePerCard
+    thetaRef.current = snappedTheta
+    if (carouselRef.current) {
+      carouselRef.current.style.transform = `rotateY(${snappedTheta}deg)`
+    }
+    startAnimationLock()
     setCurrentIndex(nearestIndex)
   }
 
   const handlePrev = () => {
+    startAnimationLock()
     setCurrentIndex((prev) => normalizeIndex(prev - 1, totalCards))
   }
 
   const handleNext = () => {
+    startAnimationLock()
     setCurrentIndex((prev) => normalizeIndex(prev + 1, totalCards))
   }
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     if (event.button !== 0) return
-    dragState.current.isDragging = true
+    dragState.current.isPointerDown = true
+    dragState.current.isDragging = false
     dragState.current.startX = event.clientX
     dragState.current.startTheta = thetaRef.current
     dragState.current.moved = false
     dragState.current.hasCapture = false
-    setIsDragging(true)
   }
 
   const releasePointerCaptureSafe = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -128,14 +221,18 @@ export function SystemScreensCarouselSection() {
   }
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!dragState.current.isDragging) return
+    if (!dragState.current.isPointerDown) return
     const diffX = event.clientX - dragState.current.startX
-    if (Math.abs(diffX) > 6) {
+    const hasMovedEnough = Math.abs(diffX) > 6
+    if (!dragState.current.moved && !hasMovedEnough) return
+    if (!dragState.current.moved && hasMovedEnough) {
       dragState.current.moved = true
-      if (!dragState.current.hasCapture) {
-        event.currentTarget.setPointerCapture(event.pointerId)
-        dragState.current.hasCapture = true
-      }
+      dragState.current.isDragging = true
+      setIsDragging(true)
+    }
+    if (dragState.current.isDragging && !dragState.current.hasCapture) {
+      event.currentTarget.setPointerCapture(event.pointerId)
+      dragState.current.hasCapture = true
     }
     const sensitivity = 0.35
     const newTheta = dragState.current.startTheta + diffX * sensitivity
@@ -146,25 +243,54 @@ export function SystemScreensCarouselSection() {
   }
 
   const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!dragState.current.isDragging) return
-    dragState.current.isDragging = false
-    setIsDragging(false)
+    if (!dragState.current.isPointerDown) return
+    dragState.current.isPointerDown = false
+    if (dragState.current.isDragging) {
+      dragState.current.isDragging = false
+      setIsDragging(false)
+      releasePointerCaptureSafe(event)
+      snapToNearest()
+      return
+    }
     releasePointerCaptureSafe(event)
-    snapToNearest()
   }
 
   const handlePointerCancel = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!dragState.current.isDragging) return
-    dragState.current.isDragging = false
-    setIsDragging(false)
+    if (!dragState.current.isPointerDown) return
+    dragState.current.isPointerDown = false
+    if (dragState.current.isDragging) {
+      dragState.current.isDragging = false
+      setIsDragging(false)
+      releasePointerCaptureSafe(event)
+      snapToNearest()
+      return
+    }
     releasePointerCaptureSafe(event)
-    snapToNearest()
   }
 
   const handleCardClick = (index: number) => {
     if (dragState.current.moved) return
     if (index !== currentIndex) return
+    startFlipLock()
     setFlippedIndex((prev) => (prev === index ? null : index))
+  }
+
+  const handleZoomOpen = (event: React.MouseEvent, screen: (typeof screens)[number]) => {
+    event.stopPropagation()
+    setZoomLevel(1)
+    setZoomedScreen(screen)
+  }
+
+  const handleZoomClose = () => {
+    setZoomedScreen(null)
+  }
+
+  const handleZoomIn = () => {
+    setZoomLevel((prev) => Math.min(prev + 0.25, 3))
+  }
+
+  const handleZoomOut = () => {
+    setZoomLevel((prev) => Math.max(prev - 0.25, 1))
   }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -200,7 +326,8 @@ export function SystemScreensCarouselSection() {
         </div>
 
         <div
-          className={`${styles.carouselStage} mt-12 ${isDragging ? styles.dragging : ""}`}
+          ref={stageRef}
+          className={`${styles.carouselStage} mt-16 sm:mt-20 ${isDragging ? styles.dragging : ""}`}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -212,9 +339,10 @@ export function SystemScreensCarouselSection() {
         >
           <div ref={carouselRef} className={styles.carousel}>
             {screens.map((screen, index) => (
-              <button
+              <div
                 key={screen.id}
-                type="button"
+                role="button"
+                tabIndex={index === currentIndex ? 0 : -1}
                 onClick={() => handleCardClick(index)}
                 className={`${styles.card} ${flippedIndex === index ? styles.flipped : ""}`}
                 style={{ "--angle": `${cardAngles[index]}deg` } as React.CSSProperties}
@@ -238,6 +366,16 @@ export function SystemScreensCarouselSection() {
                           className={styles.screenImage}
                           draggable={false}
                         />
+                        <button
+                          type="button"
+                          className={styles.zoomButton}
+                          onClick={(event) => handleZoomOpen(event, screen)}
+                          onPointerDown={(event) => event.stopPropagation()}
+                          onPointerUp={(event) => event.stopPropagation()}
+                          aria-label={`Ampliar imagem de ${screen.title}`}
+                        >
+                          <ZoomIn className={styles.zoomIcon} />
+                        </button>
                         <div className={styles.screenGlare} />
                         <div className={styles.scanLines} />
                       </div>
@@ -262,16 +400,90 @@ export function SystemScreensCarouselSection() {
                     </div>
                   </div>
                 </div>
-              </button>
+              </div>
             ))}
           </div>
+          {showFrontOverlay && activeScreen && (
+            <div
+              className={styles.activeOverlay}
+              aria-hidden="true"
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerCancel}
+            >
+              <div
+                className={styles.activeCard}
+                style={{ transform: `scale(${overlayScale})` }}
+                onClick={() => handleCardClick(currentIndex)}
+              >
+                <div className="flex h-full flex-col p-5 sm:p-6">
+                  <div className="flex items-center justify-between text-[0.7rem] uppercase tracking-[0.35em] text-emerald-200/70">
+                    <span>{activeScreen.label}</span>
+                    <span className="text-white/50">{activeScreen.category}</span>
+                  </div>
+                  <h3 className="mt-4 text-xl font-semibold text-white">{activeScreen.title}</h3>
+                  <div className={styles.activeFrame}>
+                    <img
+                      src={activeScreen.image}
+                      alt={`Preview ${activeScreen.title}`}
+                      className={styles.activeImage}
+                    />
+                    <button
+                      type="button"
+                      className={styles.zoomButton}
+                      onClick={(event) => handleZoomOpen(event, activeScreen)}
+                      onPointerDown={(event) => event.stopPropagation()}
+                      onPointerUp={(event) => event.stopPropagation()}
+                      aria-label={`Ampliar imagem de ${activeScreen.title}`}
+                    >
+                      <ZoomIn className={styles.zoomIcon} />
+                    </button>
+                  </div>
+                  <p className="mt-4 text-sm text-white/70 leading-relaxed">{activeScreen.summary}</p>
+                  <div className="mt-auto flex items-center gap-2 text-xs text-emerald-200/70">
+                    <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
+                    Clique para detalhes
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          {showBackOverlay && activeScreen && (
+            <div
+              className={styles.activeOverlay}
+              aria-hidden="true"
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerCancel}
+            >
+              <div
+                className={`${styles.activeCard} ${styles.activeCardBack}`}
+                style={{ transform: `scale(${overlayScale})` }}
+                onClick={() => handleCardClick(currentIndex)}
+              >
+                <div className="flex h-full flex-col p-5 sm:p-6">
+                  <div className="text-[0.7rem] uppercase tracking-[0.35em] text-emerald-200/70">
+                    {activeScreen.label}
+                  </div>
+                  <h3 className="mt-4 text-xl font-semibold text-white">{activeScreen.title}</h3>
+                  <p className="mt-4 text-sm text-white/70 leading-relaxed">{activeScreen.description}</p>
+                  <div className="mt-auto flex items-center justify-between text-xs text-white/60">
+                    <span>Arraste para navegar</span>
+                    <span className="text-emerald-300">Clique para voltar</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        <div className="mt-8 flex items-center justify-center gap-4 relative z-20">
+        <div className={`${styles.carouselControls} mt-8 flex items-center justify-center gap-4`}>
           <button
             type="button"
             onClick={handlePrev}
-            className="h-11 w-11 rounded-full border border-emerald-400/40 bg-black/40 text-emerald-200 transition hover:-translate-y-0.5 hover:bg-black/70"
+            className="h-11 w-11 cursor-pointer rounded-full border border-emerald-400/40 bg-black/40 text-emerald-200 transition hover:-translate-y-0.5 hover:bg-black/70"
             aria-label="Tela anterior"
           >
             <ChevronLeft className="h-5 w-5 mx-auto" />
@@ -279,7 +491,7 @@ export function SystemScreensCarouselSection() {
           <button
             type="button"
             onClick={handleNext}
-            className="h-11 w-11 rounded-full border border-emerald-400/40 bg-black/40 text-emerald-200 transition hover:-translate-y-0.5 hover:bg-black/70"
+            className="h-11 w-11 cursor-pointer rounded-full border border-emerald-400/40 bg-black/40 text-emerald-200 transition hover:-translate-y-0.5 hover:bg-black/70"
             aria-label="Proxima tela"
           >
             <ChevronRight className="h-5 w-5 mx-auto" />
@@ -290,6 +502,36 @@ export function SystemScreensCarouselSection() {
           Use as setas ou arraste para navegar. Clique na tela ativa para virar.
         </p>
       </div>
+
+      {zoomedScreen && (
+        <div className={styles.zoomOverlay} onClick={handleZoomClose} role="dialog" aria-modal="true">
+          <div className={styles.zoomPanel} onClick={(event) => event.stopPropagation()}>
+            <div className={styles.zoomHeader}>
+              <div className={styles.zoomTitle}>{zoomedScreen.title}</div>
+              <button type="button" className={styles.zoomClose} onClick={handleZoomClose} aria-label="Fechar">
+                <X className={styles.zoomIcon} />
+              </button>
+            </div>
+            <div className={styles.zoomImageWrap}>
+              <img
+                src={zoomedScreen.image}
+                alt={`Imagem ampliada de ${zoomedScreen.title}`}
+                style={{ transform: `scale(${zoomLevel})` }}
+                className={styles.zoomImage}
+              />
+            </div>
+            <div className={styles.zoomControls}>
+              <button type="button" onClick={handleZoomOut} className={styles.zoomControlButton}>
+                <Minus className={styles.zoomIcon} />
+              </button>
+              <span className={styles.zoomLevel}>{Math.round(zoomLevel * 100)}%</span>
+              <button type="button" onClick={handleZoomIn} className={styles.zoomControlButton}>
+                <Plus className={styles.zoomIcon} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
