@@ -68,9 +68,9 @@ export function GlassmorphismNav() {
 
   // Detect if header is over #features section
   useEffect(() => {
-    const checkBackground = () => {
-      if (typeof window === "undefined") return
+    if (typeof window === "undefined" || typeof document === "undefined") return
 
+    const checkBackground = () => {
       const navElement = document.querySelector('nav')
       const featuresSection = document.querySelector('#features')
       
@@ -101,11 +101,13 @@ export function GlassmorphismNav() {
   }, [])
 
   const scrollToTop = () => {
+    if (typeof window === "undefined") return
     console.log("[v0] Scrolling to top")
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
   const scrollToSection = (href: string) => {
+    if (typeof window === "undefined" || typeof document === "undefined") return
     if (href.startsWith("/")) {
       return
     }

@@ -10,6 +10,8 @@ export function NavigationTransition() {
   const previousPathname = useRef(pathname)
 
   useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") return
+
     console.log("[v0] NavigationTransition mounted for path:", pathname)
 
     // Handle link clicks for smooth transitions
@@ -17,7 +19,7 @@ export function NavigationTransition() {
       const target = e.target as HTMLElement
       const link = target.closest("a")
 
-      if (link && link.href && link.href.startsWith(window.location.origin)) {
+      if (link && link.href && window.location && link.href.startsWith(window.location.origin)) {
         const url = new URL(link.href)
 
         // Only intercept internal navigation to different pages

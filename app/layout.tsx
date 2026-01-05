@@ -5,6 +5,7 @@ import "./globals.css"
 import { PageTransition } from "@/components/page-transition"
 import { NavigationTransition } from "@/components/navigation-transition"
 import { SiteLoader } from "@/components/site-loader"
+import { ErrorBoundary } from "@/components/error-boundary"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Dancing_Script, Caveat } from "next/font/google"
 import Script from "next/script"
@@ -46,17 +47,19 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="dark">
       <body className={`font-sans antialiased ${dancingScript.variable} ${caveat.variable}`}>
-        <SiteLoader />
-        <Suspense fallback={null}>
-          <NavigationTransition />
-          <PageTransition>{children}</PageTransition>
-        </Suspense>
+        <ErrorBoundary>
+          <SiteLoader />
+          <Suspense fallback={null}>
+            <NavigationTransition />
+            <PageTransition>{children}</PageTransition>
+          </Suspense>
         <Script id="chatwoot-widget" strategy="afterInteractive">
           {`window.chatwootSettings={"position":"right","type":"standard","launcherTitle":"Fale conosco no chat"};
 (function(d,t){var BASE_URL="https://chat.simplexsolucoes.com.br";var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
 g.src=BASE_URL+"/packs/js/sdk.js";g.async=true;s.parentNode.insertBefore(g,s);g.onload=function(){window.chatwootSDK.run({websiteToken:"6dPgMBcE9W69x7hHgXQnwuPN",baseUrl:BASE_URL})}})(document,"script");`}
         </Script>
-        <SpeedInsights />
+          <SpeedInsights />
+        </ErrorBoundary>
       </body>
     </html>
   )
