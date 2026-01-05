@@ -10,12 +10,12 @@ export function NavigationTransition() {
   const previousPathname = useRef(pathname)
 
   useEffect(() => {
-    if (typeof window === "undefined" || typeof document === "undefined") return
-
     console.log("[v0] NavigationTransition mounted for path:", pathname)
 
     // Handle link clicks for smooth transitions
     const handleLinkClick = (e: MouseEvent) => {
+      if (typeof window === "undefined") return
+      
       const target = e.target as HTMLElement
       const link = target.closest("a")
 
@@ -40,10 +40,14 @@ export function NavigationTransition() {
       }
     }
 
-    document.addEventListener("click", handleLinkClick)
+    if (typeof document !== "undefined") {
+      document.addEventListener("click", handleLinkClick)
+    }
 
     return () => {
-      document.removeEventListener("click", handleLinkClick)
+      if (typeof document !== "undefined") {
+        document.removeEventListener("click", handleLinkClick)
+      }
     }
   }, [pathname, router])
 

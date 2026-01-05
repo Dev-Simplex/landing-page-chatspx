@@ -4,15 +4,10 @@ import { useEffect, useState } from "react"
 
 export function SiteLoader() {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (!isMounted || typeof window === "undefined") return
-
+    if (typeof window === "undefined" || typeof document === "undefined") return
+    
     const handleLoad = () => setIsLoaded(true)
 
     if (document.readyState === "complete") {
@@ -22,11 +17,11 @@ export function SiteLoader() {
 
     window.addEventListener("load", handleLoad)
     return () => window.removeEventListener("load", handleLoad)
-  }, [isMounted])
+  }, [])
 
   useEffect(() => {
-    if (!isMounted || typeof window === "undefined" || typeof document === "undefined") return
-
+    if (typeof document === "undefined") return
+    
     const root = document.documentElement
     const body = document.body
 
@@ -38,7 +33,7 @@ export function SiteLoader() {
 
     root.classList.remove("is-loading")
     body.classList.remove("is-loading")
-  }, [isLoaded, isMounted])
+  }, [isLoaded])
 
   return (
     <div

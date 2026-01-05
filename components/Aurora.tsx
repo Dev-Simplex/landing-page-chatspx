@@ -136,6 +136,7 @@ export default function Aurora(props) {
     let program
 
     function resize() {
+      if (typeof window === "undefined") return
       const width = window.innerWidth
       const height = window.innerHeight
       renderer.setSize(width, height)
@@ -143,7 +144,9 @@ export default function Aurora(props) {
         program.uniforms.uResolution.value = [width, height]
       }
     }
-    window.addEventListener("resize", resize)
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", resize)
+    }
 
     const geometry = new Triangle(gl)
     if (geometry.attributes.uv) {
@@ -155,6 +158,9 @@ export default function Aurora(props) {
       return [c.r, c.g, c.b]
     })
 
+    const initialWidth = typeof window !== "undefined" ? window.innerWidth : 1920
+    const initialHeight = typeof window !== "undefined" ? window.innerHeight : 1080
+    
     program = new Program(gl, {
       vertex: VERT,
       fragment: FRAG,
@@ -162,7 +168,7 @@ export default function Aurora(props) {
         uTime: { value: 0 },
         uAmplitude: { value: amplitude },
         uColorStops: { value: colorStopsArray },
-        uResolution: { value: [window.innerWidth, window.innerHeight] },
+        uResolution: { value: [initialWidth, initialHeight] },
         uBlend: { value: blend },
       },
     })
@@ -190,7 +196,9 @@ export default function Aurora(props) {
 
     return () => {
       cancelAnimationFrame(animateId)
-      window.removeEventListener("resize", resize)
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", resize)
+      }
       if (ctn && gl.canvas.parentNode === ctn) {
         ctn.removeChild(gl.canvas)
       }

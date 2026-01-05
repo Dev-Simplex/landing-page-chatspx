@@ -69,7 +69,7 @@ export function GlassmorphismNav() {
   // Detect if header is over #features section
   useEffect(() => {
     if (typeof window === "undefined" || typeof document === "undefined") return
-
+    
     const checkBackground = () => {
       const navElement = document.querySelector('nav')
       const featuresSection = document.querySelector('#features')
@@ -90,13 +90,15 @@ export function GlassmorphismNav() {
     }
 
     // Check on scroll and resize
-    window.addEventListener('scroll', checkBackground, { passive: true })
-    window.addEventListener('resize', checkBackground)
-    checkBackground() // Initial check
+    if (typeof window !== "undefined") {
+      window.addEventListener('scroll', checkBackground, { passive: true })
+      window.addEventListener('resize', checkBackground)
+      checkBackground() // Initial check
 
-    return () => {
-      window.removeEventListener('scroll', checkBackground)
-      window.removeEventListener('resize', checkBackground)
+      return () => {
+        window.removeEventListener('scroll', checkBackground)
+        window.removeEventListener('resize', checkBackground)
+      }
     }
   }, [])
 
