@@ -35,18 +35,6 @@ const Play = () => (
 
 const trustedLogos = [
   {
-    src: "/images/clientes/colegio-alternativo.png",
-    alt: "Colegio Alternativo",
-    className: "h-10 sm:h-11 md:h-14 w-auto object-contain",
-    mobileClassName: "h-8 w-auto object-contain",
-  },
-  {
-    src: "/images/clientes/hmx-logo.png",
-    alt: "HMX",
-    className: "h-14 sm:h-16 md:h-20 w-auto object-contain",
-    mobileClassName: "h-12 w-auto object-contain",
-  },
-  {
     src: "/images/clientes/password.webp",
     alt: "Password",
     className: "h-6 sm:h-7 md:h-8 w-auto object-contain",
