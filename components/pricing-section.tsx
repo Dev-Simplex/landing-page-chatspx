@@ -7,16 +7,20 @@ import {
   Bot,
   Brain,
   Check,
+  Cloud,
+  Globe,
   Headphones,
   Plug,
   Rocket,
   Settings,
+  Shield,
   Smartphone,
   Sparkles,
   Star,
   Users,
   Workflow,
   X,
+  Zap,
   ArrowRight,
   type LucideIcon,
 } from "lucide-react"
@@ -27,7 +31,7 @@ const plans = [
   {
     name: "Start",
     description: "Para equipes que est\u00e3o come\u00e7ando no atendimento centralizado.",
-    price: "R$ 280,00",
+    price: "R$ 450,00",
     badge: null,
     badgeIcon: null,
     icon: Rocket,
@@ -53,7 +57,7 @@ const plans = [
   {
     name: "Standard",
     description: "O equil\u00edbrio ideal entre volume, dados e automa\u00e7\u00e3o.",
-    price: "R$ 580,00",
+    price: "R$ 850,00",
     badge: "Mais escolhido",
     badgeIcon: Star,
     icon: Settings,
@@ -79,7 +83,7 @@ const plans = [
   {
     name: "Enterprise",
     description: "Para opera\u00e7\u00f5es com alto volume e IA aplicada.",
-    price: "R$ 890,00",
+    price: "R$ 1.250,00",
     badge: "IA & Escala",
     badgeIcon: Sparkles,
     icon: Brain,
@@ -291,6 +295,116 @@ export function PricingSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out mt-10 sm:mt-14">
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.025] to-transparent p-6 sm:p-8">
+            <div className="pointer-events-none absolute -top-24 -right-20 h-64 w-64 rounded-full bg-[#FF9900]/15 blur-3xl" aria-hidden="true" />
+            <div className="pointer-events-none absolute -bottom-28 -left-24 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" aria-hidden="true" />
+            <div
+              className="pointer-events-none absolute inset-0 opacity-[0.04]"
+              aria-hidden="true"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to right, rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.6) 1px, transparent 1px)",
+                backgroundSize: "28px 28px",
+              }}
+            />
+
+            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center">
+              <div className="flex items-center gap-5 shrink-0">
+                <div className="relative flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-2xl border border-white/10 bg-[#0b0b0c]/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_20px_60px_-20px_rgba(255,153,0,0.35)]">
+                  <span className="absolute inset-x-3 top-3 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                  <svg
+                    viewBox="0 0 96 56"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    aria-label="Amazon Web Services"
+                    className="h-12 sm:h-14 w-auto"
+                  >
+                    <text
+                      x="48"
+                      y="32"
+                      textAnchor="middle"
+                      fontFamily="'Helvetica Neue', Arial, sans-serif"
+                      fontWeight="800"
+                      fontSize="28"
+                      letterSpacing="-1"
+                      fill="#ffffff"
+                    >
+                      aws
+                    </text>
+                    <path
+                      d="M14 46 Q 48 58 82 46"
+                      stroke="#FF9900"
+                      strokeWidth="3.2"
+                      fill="none"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M74 42 L 82 46 L 76 51"
+                      stroke="#FF9900"
+                      strokeWidth="3.2"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div className="lg:hidden">
+                  <div className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FF9900]">
+                    <Cloud className="h-3 w-3" />
+                    Powered by AWS
+                  </div>
+                  <div className="mt-1 text-base font-semibold text-white">
+                    Infraestrutura premium
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex-1 text-center lg:text-left">
+                <div className="hidden lg:inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#FF9900] mb-2">
+                  <Cloud className="h-3.5 w-3.5" />
+                  Powered by AWS &middot; Amazon Web Services
+                </div>
+                <h4 className="text-xl sm:text-2xl font-semibold text-white mb-2 text-balance">
+                  Hospedado em nuvem de alta performance
+                </h4>
+                <p className="text-sm sm:text-[15px] text-white/65 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                  Sua opera&ccedil;&atilde;o roda na mesma infraestrutura usada pelas maiores empresas do mundo.
+                  Escala el&aacute;stica, lat&ecirc;ncia baixa e seguran&ccedil;a de n&iacute;vel empresarial &mdash; sem complica&ccedil;&atilde;o.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 shrink-0 w-full lg:w-auto">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3.5 sm:px-4 sm:py-4 text-center backdrop-blur-sm">
+                  <Zap className="h-4 w-4 mx-auto text-[#FF9900] mb-1.5" />
+                  <div className="text-lg sm:text-xl font-bold text-white tabular-nums tracking-tight">
+                    99,9<span className="text-white/50">%</span>
+                  </div>
+                  <div className="mt-0.5 text-[9px] sm:text-[10px] uppercase tracking-[0.14em] text-white/50">
+                    Uptime
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3.5 sm:px-4 sm:py-4 text-center backdrop-blur-sm">
+                  <Shield className="h-4 w-4 mx-auto text-[#FF9900] mb-1.5" />
+                  <div className="text-lg sm:text-xl font-bold text-white tracking-tight">SLA</div>
+                  <div className="mt-0.5 text-[9px] sm:text-[10px] uppercase tracking-[0.14em] text-white/50">
+                    Garantido
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3.5 sm:px-4 sm:py-4 text-center backdrop-blur-sm">
+                  <Globe className="h-4 w-4 mx-auto text-[#FF9900] mb-1.5" />
+                  <div className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                    sa-east-1
+                  </div>
+                  <div className="mt-0.5 text-[9px] sm:text-[10px] uppercase tracking-[0.14em] text-white/50">
+                    Regi&atilde;o BR
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="mt-12 sm:mt-16">
