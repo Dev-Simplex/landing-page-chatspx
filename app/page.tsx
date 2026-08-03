@@ -4,10 +4,10 @@ import { ProblemSolutionSection } from "@/components/problem-solution-section"
 import Aurora from "@/components/Aurora"
 import { FeaturesSection } from "@/components/features-section"
 import { AITeamSection } from "@/components/ai-team-section"
-import { SystemScreensCarouselSection } from "@/components/system-screens-carousel"
+// Oculto temporariamente: aguardando as novas capturas de tela do sistema
+// import { SystemScreensCarouselSection } from "@/components/system-screens-carousel"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { PricingSection } from "@/components/pricing-section"
-import { ROICalculatorSection } from "@/components/roi-calculator-section"
 import { CTASection } from "@/components/cta-section"
 import { Footer } from "@/components/footer"
 
@@ -24,10 +24,9 @@ export default function HomePage() {
           <ProblemSolutionSection />
           <FeaturesSection />
           <AITeamSection />
-          <SystemScreensCarouselSection />
+          {/* <SystemScreensCarouselSection /> */}
           <TestimonialsSection />
           <PricingSection />
-          <ROICalculatorSection />
           <CTASection />
           <Footer />
         </div>

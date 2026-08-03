@@ -1,37 +1,63 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import Image from "next/image"
 import {
+  ArrowUpRight,
   BarChart3,
   Bot,
-  Brain,
+  Building2,
+  CalendarClock,
   Check,
   Cloud,
   Globe,
+  GraduationCap,
   Headphones,
+  LayoutDashboard,
+  LifeBuoy,
+  MessageCircle,
+  Minus,
   Plug,
   Rocket,
-  Settings,
+  Share2,
   Shield,
-  Smartphone,
   Sparkles,
-  Star,
   Users,
-  Workflow,
-  X,
+  Wallet,
+  Wrench,
   Zap,
-  ArrowRight,
   type LucideIcon,
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { TruckButton } from "@/components/truck-button"
 
-const plans = [
+const whatsappLink = "https://wa.me/556696571379"
+
+type PlanKey = "basico" | "enterprise"
+
+const plans: {
+  key: PlanKey
+  name: string
+  description: string
+  price: string
+  setup: string
+  badge: string | null
+  badgeIcon: LucideIcon | null
+  icon: LucideIcon
+  truckColor: string
+  truckColorLight: string
+  tone: {
+    accent: string
+    border: string
+    badge: string
+    glow: string
+  }
+  highlights: { label: string; value: string; included: boolean; icon: LucideIcon }[]
+}[] = [
   {
-    name: "Start",
-    description: "Para equipes que est\u00e3o come\u00e7ando no atendimento centralizado.",
-    price: "R$ 450,00",
+    key: "basico",
+    name: "Básico",
+    description: "Para equipes que estão centralizando o atendimento pela primeira vez.",
+    price: "R$ 1.790",
+    setup: "R$ 1.200",
     badge: null,
     badgeIcon: null,
     icon: Rocket,
@@ -42,133 +68,146 @@ const plans = [
       border: "border-emerald-400/30",
       badge: "bg-emerald-400/15 text-emerald-100 border border-emerald-400/30",
       glow: "hover:shadow-[0_0_32px_-12px_rgba(77,217,138,0.45)]",
-      button:
-        "bg-emerald-500 text-white hover:bg-emerald-400 focus-visible:ring-emerald-400 hover:shadow-[0_0_20px_-8px_rgba(77,217,138,0.6)]",
     },
-    features: [
-      { label: "N\u00fameros de WhatsApp", value: "2", included: true },
-      { label: "Agentes", value: "5", included: true },
-      { label: "Suporte", value: "B\u00e1sico (Email e Chat)", included: true },
-      { label: "Dashboards", value: "1 B\u00e1sico", included: true },
-      { label: "Fluxos de Atendimento", value: "N\u00e3o incluso", included: false },
-      { label: "API Personalizada", value: "N\u00e3o incluso", included: false },
+    highlights: [
+      { label: "Atendentes humanos", value: "3", included: true, icon: Users },
+      { label: "Departamentos de IA", value: "1", included: true, icon: Bot },
+      { label: "Tipos de canal", value: "WhatsApp e Instagram", included: true, icon: MessageCircle },
+      { label: "Dashboard", value: "Essencial", included: true, icon: LayoutDashboard },
+      { label: "Suporte", value: "E-mail e chat", included: true, icon: LifeBuoy },
+      { label: "IA Captain", value: "Não incluso", included: false, icon: Sparkles },
+      { label: "CSM dedicado", value: "Não incluso", included: false, icon: Headphones },
     ],
   },
   {
-    name: "Standard",
-    description: "O equil\u00edbrio ideal entre volume, dados e automa\u00e7\u00e3o.",
-    price: "R$ 850,00",
-    badge: "Mais escolhido",
-    badgeIcon: Star,
-    icon: Settings,
-    truckColor: "#2dc46f",
-    truckColorLight: "#4dd98a",
-    tone: {
-      accent: "text-green-500",
-      border: "border-green-500/30",
-      badge: "bg-green-500/15 text-green-100 border border-green-500/30",
-      glow: "hover:shadow-[0_0_32px_-12px_rgba(45,196,111,0.45)]",
-      button:
-        "bg-green-600 text-white hover:bg-green-500 focus-visible:ring-green-500 hover:shadow-[0_0_20px_-8px_rgba(45,196,111,0.6)]",
-    },
-    features: [
-      { label: "N\u00fameros de WhatsApp", value: "3", included: true },
-      { label: "Agentes", value: "10", included: true },
-      { label: "Suporte", value: "Avan\u00e7ado (Email e Chat)", included: true },
-      { label: "Dashboards", value: "2 B\u00e1sicos", included: true },
-      { label: "Fluxos de Atendimento", value: "1 para atendimento", included: true },
-      { label: "API Personalizada", value: "N\u00e3o incluso", included: false },
-    ],
-  },
-  {
+    key: "enterprise",
     name: "Enterprise",
-    description: "Para opera\u00e7\u00f5es com alto volume e IA aplicada.",
-    price: "R$ 1.250,00",
-    badge: "IA & Escala",
+    description: "O pacote completo do seu segmento, com IA Captain e CSM dedicado.",
+    price: "R$ 5.900",
+    setup: "R$ 2.900",
+    badge: "Pacote do segmento",
     badgeIcon: Sparkles,
-    icon: Brain,
+    icon: Building2,
     truckColor: "#25a359",
     truckColorLight: "#2dc46f",
     tone: {
-      accent: "text-emerald-600",
-      border: "border-emerald-600/30",
-      badge: "bg-emerald-600/15 text-emerald-100 border border-emerald-600/30",
-      glow: "hover:shadow-[0_0_32px_-12px_rgba(37,163,89,0.45)]",
-      button:
-        "bg-emerald-700 text-white hover:bg-emerald-600 focus-visible:ring-emerald-600 hover:shadow-[0_0_20px_-8px_rgba(37,163,89,0.6)]",
+      accent: "text-emerald-300",
+      border: "border-emerald-500/40",
+      badge: "bg-emerald-500/15 text-emerald-100 border border-emerald-500/30",
+      glow: "hover:shadow-[0_0_36px_-10px_rgba(45,196,111,0.5)]",
     },
-    features: [
-      { label: "N\u00fameros de WhatsApp", value: "5", included: true },
-      { label: "Agentes", value: "20", included: true },
-      { label: "Suporte", value: "Premium (Email, Chat e WhatsApp)", included: true },
-      { label: "Dashboards", value: "5 Premium", included: true },
-      { label: "Fluxos de Atendimento", value: "2 com IA", included: true },
-      { label: "API Personalizada", value: "Incluso", included: true },
+    highlights: [
+      { label: "Atendentes humanos", value: "20", included: true, icon: Users },
+      { label: "Departamentos de IA", value: "5 (o pacote do segmento)", included: true, icon: Bot },
+      {
+        label: "Tipos de canal",
+        value: "WhatsApp, Instagram, Facebook, Google Business, Site, Reclame Aqui e Mercado Livre",
+        included: true,
+        icon: MessageCircle,
+      },
+      { label: "Dashboard", value: "Customizado para o segmento", included: true, icon: LayoutDashboard },
+      { label: "Suporte", value: "E-mail, chat, WhatsApp + CSM", included: true, icon: LifeBuoy },
+      { label: "IA Captain", value: "Incluso, com treinamento da equipe", included: true, icon: Sparkles },
+      { label: "CSM dedicado", value: "Incluso", included: true, icon: Headphones },
     ],
+  },
+]
+
+const comparison: { label: string; icon: LucideIcon; basico: string; enterprise: string; exclusive?: boolean }[] = [
+  { label: "Mensalidade", icon: Wallet, basico: "R$ 1.790", enterprise: "R$ 5.900" },
+  { label: "Implantação", icon: Wrench, basico: "R$ 1.200", enterprise: "R$ 2.900" },
+  { label: "Atendentes humanos", icon: Users, basico: "3", enterprise: "20" },
+  { label: "Departamentos de IA", icon: Bot, basico: "1", enterprise: "5 (o pacote do segmento)" },
+  {
+    label: "Tipos de canal",
+    icon: MessageCircle,
+    basico: "WhatsApp e Instagram",
+    enterprise: "+ Facebook, Google Business, Site, Reclame Aqui e Mercado Livre",
+    exclusive: true,
+  },
+  {
+    label: "Contas por canal",
+    icon: Share2,
+    basico: "1 de cada tipo ativado",
+    enterprise: "1 de cada tipo, ativa se quiser",
+  },
+  { label: "IA Captain", icon: Sparkles, basico: "—", enterprise: "Incluso, com treinamento da equipe", exclusive: true },
+  { label: "CSM dedicado", icon: Headphones, basico: "—", enterprise: "Incluso", exclusive: true },
+  { label: "Dashboard", icon: LayoutDashboard, basico: "Essencial", enterprise: "Customizado para o segmento" },
+  { label: "Suporte", icon: LifeBuoy, basico: "E-mail e chat", enterprise: "E-mail, chat, WhatsApp + CSM" },
+  {
+    label: "Integrações",
+    icon: Plug,
+    basico: "CRM próprio, Calendar, Sheets (self-serve)",
+    enterprise: "Seu CRM de preferência + ferramentas personalizadas",
   },
 ]
 
 const addOns = [
   {
-    name: "N\u00fameros de WhatsApp",
-    price: "R$ 69,90",
-    detail: "Mensal",
-    icon: Smartphone,
+    name: "Atendente extra",
+    price: "R$ 150",
+    detail: "por mês",
+    icon: Users,
     tone: "text-emerald-400",
     glow: "hover:border-emerald-400/40 hover:shadow-[0_0_20px_-12px_rgba(52,211,153,0.45)]",
   },
   {
-    name: "Agentes",
-    price: "R$ 16,90",
-    detail: "Mensal",
-    icon: Users,
-    tone: "text-green-500",
-    glow: "hover:border-green-500/40 hover:shadow-[0_0_20px_-12px_rgba(45,196,111,0.45)]",
-  },
-  {
-    name: "Fluxo de IA",
-    price: "R$ 120,00",
-    detail: "Hora t\u00e9cnica",
+    name: "IA extra (além das inclusas)",
+    price: "R$ 490",
+    detail: "por mês + R$ 590 de configuração",
     icon: Bot,
-    tone: "text-green-500",
+    tone: "text-green-400",
     glow: "hover:border-green-500/40 hover:shadow-[0_0_20px_-12px_rgba(45,196,111,0.45)]",
   },
   {
-    name: "Dashboards",
-    price: "R$ 1.200,00",
-    detail: "\u00danico por dashboard",
-    icon: BarChart3,
+    name: "Conta extra do mesmo canal",
+    price: "R$ 129",
+    detail: "por mês",
+    icon: Share2,
     tone: "text-emerald-400",
     glow: "hover:border-emerald-400/40 hover:shadow-[0_0_20px_-12px_rgba(77,217,138,0.45)]",
   },
   {
-    name: "Fluxos de Atendimento",
-    price: "R$ 520,00",
-    detail: "\u00danico por fluxo",
-    icon: Workflow,
-    tone: "text-emerald-600",
+    name: "Implementação assistida",
+    price: "R$ 450",
+    detail: "por integração",
+    icon: Plug,
+    tone: "text-green-400",
+    glow: "hover:border-green-500/40 hover:shadow-[0_0_20px_-12px_rgba(45,196,111,0.45)]",
+  },
+  {
+    name: "Dashboard sob medida",
+    price: "R$ 1.200",
+    detail: "cobrança única",
+    icon: BarChart3,
+    tone: "text-emerald-400",
+    glow: "hover:border-emerald-400/40 hover:shadow-[0_0_20px_-12px_rgba(52,211,153,0.45)]",
+  },
+  {
+    name: "Treinamento presencial",
+    price: "R$ 2.500",
+    detail: "por dia",
+    icon: GraduationCap,
+    tone: "text-emerald-300",
     glow: "hover:border-emerald-600/40 hover:shadow-[0_0_20px_-12px_rgba(37,163,89,0.45)]",
   },
 ]
 
-const whatsappLink = "https://wa.me/556696571379"
+const terms = [
+  { term: "12 meses", setup: "Implantação cheia", perk: "2 implementações assistidas" },
+  { term: "24 meses", setup: "Implantação com 50% off", perk: "+ dashboard sob medida" },
+  { term: "36 meses", setup: "Implantação isenta", perk: "+ 1 dia de treinamento presencial" },
+]
 
-const featureIconMap: Record<string, LucideIcon> = {
-  "N\u00fameros de WhatsApp": Smartphone,
-  Agentes: Users,
-  Suporte: Headphones,
-  Dashboards: BarChart3,
-  "Fluxos de Atendimento": Workflow,
-  "API Personalizada": Plug,
-}
-
-const getFeatureIcon = (feature: { label: string; value: string }): LucideIcon => {
-  if (feature.label === "Fluxos de Atendimento") {
-    return feature.value.toLowerCase().includes("ia") ? Bot : Workflow
-  }
-
-  return featureIconMap[feature.label] || Check
-}
+const contractNotes = [
+  "Contrato mínimo de 12 meses",
+  "Reajuste por IPCA a cada 12 meses",
+  "Cancelamento antecipado: 30% das parcelas restantes, limitado a 3 mensalidades",
+  "Upgrade Básico → Enterprise paga só a diferença de implantação (R$ 1.700)",
+  "Downgrade apenas na renovação",
+  "LLM e mensagens Meta por conta do cliente (BYOK)",
+]
 
 export function PricingSection() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -214,73 +253,74 @@ export function PricingSection() {
         <div className="text-center mb-12 sm:mb-16">
           <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/80 text-sm font-medium mb-6">
             <Sparkles className="h-4 w-4" />
-            Planos e pre&ccedil;os
+            Planos e preços
           </div>
           <h2 className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-4 text-balance">
-            Planos que crescem com o seu atendimento
+            Dois planos. O seu segmento decide as IAs.
           </h2>
           <p className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out text-base sm:text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-            Escolha o plano ideal e adicione recursos conforme sua opera&ccedil;&atilde;o evolui.
+            O Enterprise custa o mesmo em qualquer vertical &mdash; o que muda são quais são os 5
+            departamentos de IA que entram no pacote.
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-2 lg:max-w-5xl lg:mx-auto">
           {plans.map((plan) => (
             <div
-              key={plan.name}
+              key={plan.key}
               className={`fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out rounded-3xl border ${
-                plan.badge
-                  ? "border-white/30 bg-white/10 shadow-2xl"
-                  : "border-white/10 bg-white/5"
+                plan.badge ? "border-white/30 bg-white/10 shadow-2xl" : "border-white/10 bg-white/5"
               } ${plan.tone.border} ${plan.tone.glow} p-6 sm:p-8 flex flex-col`}
             >
-              <div className="flex items-center justify-between gap-4 mb-4">
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`h-11 w-11 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center ${plan.tone.accent}`}
-                  >
-                    <plan.icon className="h-7 w-7" />
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <h3 className="text-xl sm:text-2xl font-semibold text-white">{plan.name}</h3>
-                    {plan.badge && (
-                      <span
-                        className={`text-xs font-semibold uppercase tracking-wide px-3 py-1 rounded-full flex items-center gap-2 ${plan.tone.badge}`}
-                      >
-                        {plan.badgeIcon ? <plan.badgeIcon className="h-3.5 w-3.5" /> : null}
-                        {plan.badge}
-                      </span>
-                    )}
-                  </div>
+              <div className="flex flex-wrap items-center gap-3 mb-4">
+                <div
+                  className={`h-11 w-11 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center ${plan.tone.accent}`}
+                >
+                  <plan.icon className="h-6 w-6" />
                 </div>
+                <h3 className="text-xl sm:text-2xl font-semibold text-white">{plan.name}</h3>
+                {plan.badge && (
+                  <span
+                    className={`text-xs font-semibold uppercase tracking-wide px-3 py-1 rounded-full flex items-center gap-2 ${plan.tone.badge}`}
+                  >
+                    {plan.badgeIcon ? <plan.badgeIcon className="h-3.5 w-3.5" /> : null}
+                    {plan.badge}
+                  </span>
+                )}
               </div>
+
               <p className="text-sm text-white/70 mb-6">{plan.description}</p>
-              <div className="flex items-end gap-2 mb-6">
+
+              <div className="flex items-end gap-2">
                 <span className="text-3xl sm:text-4xl font-bold text-white">{plan.price}</span>
-                <span className="text-sm text-white/60">/m&ecirc;s</span>
+                <span className="text-sm text-white/60 pb-1">/mês</span>
+              </div>
+              <div className="mt-2 mb-6 inline-flex items-center gap-2 text-sm text-white/60">
+                <Wrench className={`h-4 w-4 ${plan.tone.accent}`} />
+                Implantação: <span className="text-white/85 font-medium">{plan.setup}</span>
               </div>
 
               <div className="space-y-3 flex-1">
-                {plan.features.map((feature) => {
-                  const FeatureIcon = getFeatureIcon(feature)
-                  return (
-                    <div key={feature.label} className="flex items-start gap-3">
-                      {feature.included ? (
-                        <Check className="h-[18px] w-[18px] text-emerald-400 mt-0.5 shrink-0" />
-                      ) : (
-                        <X className="h-[18px] w-[18px] text-white/40 mt-0.5 shrink-0" />
-                      )}
-                      <FeatureIcon
-                        className={`h-[18px] w-[18px] mt-0.5 shrink-0 ${
-                          feature.included ? plan.tone.accent : "text-white/40"
-                        }`}
-                      />
-                      <div className="text-sm text-white/80">
-                        <span className="font-medium text-white">{feature.label}:</span> {feature.value}
-                      </div>
+                {plan.highlights.map((feature) => (
+                  <div key={feature.label} className="flex items-start gap-3">
+                    {feature.included ? (
+                      <Check className="h-[18px] w-[18px] text-emerald-400 mt-0.5 shrink-0" />
+                    ) : (
+                      <Minus className="h-[18px] w-[18px] text-white/30 mt-0.5 shrink-0" />
+                    )}
+                    <feature.icon
+                      className={`h-[18px] w-[18px] mt-0.5 shrink-0 ${
+                        feature.included ? plan.tone.accent : "text-white/30"
+                      }`}
+                    />
+                    <div className={`text-sm ${feature.included ? "text-white/80" : "text-white/45"}`}>
+                      <span className={`font-medium ${feature.included ? "text-white" : "text-white/60"}`}>
+                        {feature.label}:
+                      </span>{" "}
+                      {feature.value}
                     </div>
-                  )
-                })}
+                  </div>
+                ))}
               </div>
 
               <div className="flex justify-center mt-8">
@@ -297,7 +337,193 @@ export function PricingSection() {
           ))}
         </div>
 
-        <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out mt-10 sm:mt-14">
+        {/* Comparativo completo */}
+        <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out mt-12 sm:mt-16">
+          <div className="text-center mb-6">
+            <h3 className="text-2xl sm:text-3xl font-semibold text-white">Comparativo completo</h3>
+            <p className="text-sm text-white/60 mt-2">
+              Item a item, o que cada plano entrega.
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]">
+            <div className="hidden md:grid grid-cols-[1.1fr_1fr_1.4fr] gap-4 px-6 py-4 border-b border-white/10 bg-white/[0.04]">
+              <div className="text-xs uppercase tracking-[0.18em] text-white/45">Recurso</div>
+              <div className="text-sm font-semibold text-white">Básico</div>
+              <div className="text-sm font-semibold text-emerald-300 flex items-center gap-2">
+                Enterprise
+                <Sparkles className="h-3.5 w-3.5" />
+              </div>
+            </div>
+
+            {comparison.map((row, index) => (
+              <div
+                key={row.label}
+                className={`px-5 sm:px-6 py-4 ${index % 2 === 1 ? "bg-white/[0.02]" : ""} ${
+                  index === 0 ? "" : "border-t border-white/[0.06]"
+                } md:grid md:grid-cols-[1.1fr_1fr_1.4fr] md:gap-4 md:items-start`}
+              >
+                <div className="flex items-center gap-2.5 text-sm font-medium text-white">
+                  <row.icon className="h-4 w-4 text-emerald-400/80 shrink-0" />
+                  {row.label}
+                  {row.exclusive && (
+                    <span className="md:hidden text-[10px] uppercase tracking-wide text-emerald-300/70">
+                      só no Enterprise
+                    </span>
+                  )}
+                </div>
+
+                <div className="mt-3 grid grid-cols-2 gap-3 md:mt-0 md:contents">
+                  <div className="md:contents">
+                    <div className="md:hidden text-[10px] uppercase tracking-[0.18em] text-white/40 mb-1">
+                      Básico
+                    </div>
+                    <div className="text-sm text-white/65">{row.basico}</div>
+                  </div>
+                  <div className="md:contents">
+                    <div className="md:hidden text-[10px] uppercase tracking-[0.18em] text-emerald-300/60 mb-1">
+                      Enterprise
+                    </div>
+                    <div className="text-sm text-white/85">{row.enterprise}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Adicionais */}
+        <div className="mt-12 sm:mt-16">
+          <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out text-center mb-6">
+            <h3 className="text-2xl sm:text-3xl font-semibold text-white">Adicionais</h3>
+            <p className="text-sm text-white/60 mt-2">
+              Valem nos dois planos, sem teto. Habilitados na cobrança mediante autorização do cliente.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {addOns.map((item) => (
+              <div
+                key={item.name}
+                className={`fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 group hover:bg-white/10 hover:border-white/20 ${item.glow}`}
+              >
+                <div className="flex items-start gap-3">
+                  <item.icon className={`h-5 w-5 ${item.tone} shrink-0`} />
+                  <div className="text-sm text-white/80">{item.name}</div>
+                </div>
+                <div className="text-xl font-semibold text-white mt-2">{item.price}</div>
+                <div className="text-xs text-white/50 mt-1">{item.detail}</div>
+              </div>
+            ))}
+          </div>
+
+          <p className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out text-xs text-white/50 text-center mt-6">
+            Só três coisas não se compram fora do Enterprise: IA Captain, CSM dedicado e os tipos de
+            canal além de WhatsApp e Instagram.
+          </p>
+        </div>
+
+        {/* Somar x subir */}
+        <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out mt-12 sm:mt-16">
+          <div className="relative overflow-hidden rounded-3xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/[0.08] via-white/[0.02] to-transparent p-6 sm:p-8">
+            <div className="pointer-events-none absolute -top-24 -right-16 h-64 w-64 rounded-full bg-emerald-500/10 blur-3xl" aria-hidden="true" />
+            <div className="relative grid gap-6 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-emerald-300 mb-3">
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                  Somar nunca sai mais barato que subir
+                </div>
+                <h4 className="text-xl sm:text-2xl font-semibold text-white mb-3 text-balance">
+                  Montar o Enterprise por peças custa mais e entrega menos
+                </h4>
+                <p className="text-sm sm:text-[15px] text-white/65 leading-relaxed">
+                  Partindo do Básico e comprando adicionais até chegar em 5 departamentos de IA e 20
+                  atendentes, a conta fecha em <span className="text-white font-medium">R$ 6.300</span> por
+                  mês &mdash; e ainda sem IA Captain, sem CSM dedicado e sem os outros cinco tipos de canal.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-5 text-center">
+                  <div className="text-[10px] uppercase tracking-[0.14em] text-white/45 mb-1.5">
+                    Básico + adicionais
+                  </div>
+                  <div className="text-2xl font-bold text-white/70 tabular-nums line-through decoration-white/30">
+                    R$ 6.300
+                  </div>
+                  <div className="mt-1 text-[11px] text-white/40">sem Captain e sem CSM</div>
+                </div>
+                <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-5 text-center">
+                  <div className="text-[10px] uppercase tracking-[0.14em] text-emerald-200/70 mb-1.5">
+                    Enterprise
+                  </div>
+                  <div className="text-2xl font-bold text-white tabular-nums">R$ 5.900</div>
+                  <div className="mt-1 text-[11px] text-emerald-200/70">pacote completo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Prazo e condições */}
+        <div className="mt-12 sm:mt-16">
+          <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out text-center mb-6">
+            <h3 className="text-2xl sm:text-3xl font-semibold text-white">
+              A mensalidade não cai. O que se negocia é a implantação.
+            </h3>
+            <p className="text-sm text-white/60 mt-2">
+              Quanto maior o prazo, menor o custo de entrada &mdash; e mais escopo entra junto.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            {terms.map((item) => (
+              <div
+                key={item.term}
+                className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/[0.07] hover:border-white/20 transition-colors"
+              >
+                <div className="flex items-center gap-2 text-emerald-300">
+                  <CalendarClock className="h-4 w-4" />
+                  <span className="text-sm font-semibold uppercase tracking-wide">{item.term}</span>
+                </div>
+                <div className="mt-3 text-lg font-semibold text-white">{item.setup}</div>
+                <div className="mt-2 flex items-start gap-2 text-sm text-white/60">
+                  <Check className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
+                  {item.perk}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <div className="flex items-center gap-2 text-emerald-300 mb-3">
+              <Wallet className="h-4 w-4" />
+              <span className="text-xs font-semibold uppercase tracking-[0.18em]">Anual à vista</span>
+            </div>
+            <p className="text-sm text-white/70 leading-relaxed">
+              Pagando o ano à vista, você escolhe: <span className="text-white font-medium">um mês por
+              nossa conta</span> (paga 11, leva 12) ou <span className="text-white font-medium">escopo</span>{" "}
+              (1 departamento de IA configurado sem custo + dashboard sob medida).
+            </p>
+          </div>
+
+          <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out mt-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 sm:p-6">
+            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-white/45 mb-3">
+              Demais condições
+            </div>
+            <ul className="grid gap-2 sm:grid-cols-2">
+              {contractNotes.map((note) => (
+                <li key={note} className="flex items-start gap-2 text-xs sm:text-[13px] text-white/55">
+                  <span className="mt-1.5 h-1 w-1 rounded-full bg-emerald-400/70 shrink-0" />
+                  {note}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* AWS */}
+        <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out mt-12 sm:mt-16">
           <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.025] to-transparent p-6 sm:p-8">
             <div className="pointer-events-none absolute -top-24 -right-20 h-64 w-64 rounded-full bg-[#FF9900]/15 blur-3xl" aria-hidden="true" />
             <div className="pointer-events-none absolute -bottom-28 -left-24 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" aria-hidden="true" />
@@ -371,8 +597,8 @@ export function PricingSection() {
                   Hospedado em nuvem de alta performance
                 </h4>
                 <p className="text-sm sm:text-[15px] text-white/65 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                  Sua opera&ccedil;&atilde;o roda na mesma infraestrutura usada pelas maiores empresas do mundo.
-                  Escala el&aacute;stica, lat&ecirc;ncia baixa e seguran&ccedil;a de n&iacute;vel empresarial &mdash; sem complica&ccedil;&atilde;o.
+                  Sua operação roda na mesma infraestrutura usada pelas maiores empresas do mundo.
+                  Escala elástica, latência baixa e segurança de nível empresarial &mdash; sem complicação.
                 </p>
               </div>
 
@@ -399,41 +625,12 @@ export function PricingSection() {
                     sa-east-1
                   </div>
                   <div className="mt-0.5 text-[9px] sm:text-[10px] uppercase tracking-[0.14em] text-white/50">
-                    Regi&atilde;o BR
+                    Região BR
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="mt-12 sm:mt-16">
-          <div className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out text-center mb-6">
-            <h3 className="text-2xl sm:text-3xl font-semibold text-white">Adicionais</h3>
-            <p className="text-sm text-white/60 mt-2">
-              Itens habilitados na cobran&ccedil;a mediante autoriza&ccedil;&atilde;o do cliente.
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {addOns.map((item) => (
-              <div
-                key={item.name}
-                className={`fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 group hover:bg-white/10 hover:border-white/20 ${item.glow}`}
-              >
-                <div className="flex items-start gap-3">
-                  <item.icon className={`h-5 w-5 ${item.tone} shrink-0`} />
-                  <div className="text-sm text-white/80">{item.name}</div>
-                </div>
-                <div className="text-xl font-semibold text-white mt-2">{item.price}</div>
-                <div className="text-xs text-white/50 mt-1">{item.detail}</div>
-              </div>
-            ))}
-          </div>
-
-          <p className="fade-in-element opacity-0 translate-y-6 transition-all duration-1000 ease-out text-xs text-white/50 text-center mt-6">
-            Valores adicionais s&atilde;o habilitados mediante autoriza&ccedil;&atilde;o do cliente.
-          </p>
         </div>
       </div>
     </section>

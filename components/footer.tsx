@@ -22,8 +22,8 @@ const footerLinks: FooterSection[] = [
     links: [
       { title: "Recursos", href: "#features" },
       { title: "IA Captain", href: "#ai-team" },
-      { title: "Resultados", href: "#roi-calculator" },
       { title: "Depoimentos", href: "#testimonials" },
+      { title: "Planos e preços", href: "#pricing" },
     ],
   },
   {
