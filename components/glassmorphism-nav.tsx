@@ -10,6 +10,7 @@ const navigation = [
   { name: "IA Captain", href: "#ai-team" },
   { name: "Depoimentos", href: "#testimonials" },
   { name: "Planos", href: "#pricing" },
+  { name: "Baixar app", href: "/baixar" },
 ]
 const whatsappLink = "https://wa.me/556696571379"
 
@@ -171,7 +172,7 @@ export function GlassmorphismNav() {
               </Link>
 
               {/* Desktop Navigation */}
-              <div className="hidden lg:flex items-center space-x-8">
+              <div className="hidden lg:flex items-center space-x-5">
                 {navigation.map((item) =>
                   item.href.startsWith("/") ? (
                     <Link

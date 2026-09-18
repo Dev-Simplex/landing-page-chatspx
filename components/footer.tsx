@@ -24,6 +24,7 @@ const footerLinks: FooterSection[] = [
       { title: "IA Captain", href: "#ai-team" },
       { title: "Depoimentos", href: "#testimonials" },
       { title: "Planos e preços", href: "#pricing" },
+      { title: "Baixar o app", href: "/baixar" },
     ],
   },
   {
