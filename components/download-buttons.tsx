@@ -32,14 +32,12 @@ function BotaoLoja({
   logo,
   linha1,
   linha2,
-  detalhe,
 }: {
   href: string
   destaque: boolean
   logo: ReactNode
   linha1: string
   linha2: string
-  detalhe?: string
 }) {
   return (
     <a
@@ -55,15 +53,6 @@ function BotaoLoja({
         <span className={`text-xs ${destaque ? "text-black/70" : "text-white/60"}`}>{linha1}</span>
         <span className="text-xl font-semibold tracking-tight">{linha2}</span>
       </span>
-      {detalhe && (
-        <span
-          className={`ml-auto rounded-full px-2.5 py-1 text-[11px] font-medium ${
-            destaque ? "bg-black/10 text-black/75" : "bg-white/10 text-white/70"
-          }`}
-        >
-          {detalhe}
-        </span>
-      )}
     </a>
   )
 }
@@ -96,7 +85,6 @@ export function DownloadButtons() {
           logo={<AppleLogo className="size-8 shrink-0" />}
           linha1="Baixar na"
           linha2="App Store"
-          detalhe="iPhone"
         />
       </div>
 
