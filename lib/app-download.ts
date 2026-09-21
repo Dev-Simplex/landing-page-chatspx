@@ -11,8 +11,8 @@ export const APP = {
   // O APK (~107 MB) não cabe no git: fica como asset da Release no GitHub.
   // O botão aponta para /baixar/android, que redireciona para cá.
   apkOrigem:
-    "https://github.com/Dev-Simplex/landing-page-chatspx/releases/download/android-v4.3.3/ChatSPX-4.3.3.apk",
-  apkSha256: "754354e7d82d849837cc414f5bb1a96a2089a7292cc438ee24e4ebea995b37b0",
+    "https://github.com/Dev-Simplex/landing-page-chatspx/releases/download/android-v4.3.3/ChatSPX-4.3.3-direto.apk",
+  apkSha256: "70f46d1bf7f88122d314f155d37a3468b7c493e759daaebd614b82cbe6c2f426",
   iosMinimo: "15.1",
   androidMinimo: "7.0",
 }

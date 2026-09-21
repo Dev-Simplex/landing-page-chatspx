@@ -108,9 +108,8 @@ const PERGUNTAS: { pergunta: string; resposta: ReactNode }[] = [
           pergunta: "Por que no Android o download é um arquivo?",
           resposta: (
             <>
-              O app está em análise na Google Play. Enquanto isso, você instala pelo arquivo oficial (APK), que é o
-              mesmo pacote assinado que enviamos à loja. Assim que o app for publicado, o botão passa a abrir a Google
-              Play.
+              O app está em análise na Google Play. Enquanto isso, você instala pelo arquivo oficial (APK), a mesma
+              versão que enviamos à loja. Assim que o app for publicado, o botão passa a abrir a Google Play.
             </>
           ),
         },
@@ -119,8 +118,7 @@ const PERGUNTAS: { pergunta: string; resposta: ReactNode }[] = [
           resposta: (
             <>
               É o Play Protect. Como o Chat SPX já está cadastrado na Google Play mas ainda não foi publicado, o
-              celular estranha receber o app por fora da loja. O arquivo é o mesmo que enviamos à Google. Para
-              instalar:
+              celular estranha receber o app por fora da loja. É o mesmo app, publicado por nós. Para instalar:
               <ol className="mt-3 list-decimal space-y-2 pl-5 text-white/75">
                 <li>Toque no arquivo baixado e permita a instalação, se o Android pedir.</li>
                 <li>
@@ -131,6 +129,17 @@ const PERGUNTAS: { pergunta: string; resposta: ReactNode }[] = [
                 <li>Instale o arquivo e ligue a opção de volta.</li>
               </ol>
               <span className="mt-3 block">Assim que o app for publicado na Play, esse aviso deixa de aparecer.</span>
+            </>
+          ),
+        },
+        {
+          pergunta: "Já tenho o Chat SPX instalado. Preciso fazer algo?",
+          resposta: (
+            <>
+              Nesta versão, sim: <strong>desinstale o app antes</strong> de instalar o arquivo. Esta atualização foi
+              assinada com uma chave nova, e o Android recusa instalar por cima quando isso acontece — aparece um
+              aviso de que o app não foi instalado. Suas conversas ficam no servidor: depois de instalar, é só entrar
+              de novo com o seu usuário.
             </>
           ),
         },
