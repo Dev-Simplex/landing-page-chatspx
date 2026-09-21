@@ -98,6 +98,19 @@ export function DownloadButtons() {
           linha1={APP.playLiberada ? "Disponível no" : "Baixar para"}
           linha2={APP.playLiberada ? "Google Play" : "Android"}
         />
+        {/* Enquanto a Play não publica o app, o Android mostra uma tela do Play
+            Protect no meio da instalação. Quem não for avisado ANTES desiste ali
+            — por isso o aviso fica junto do botão, e não só nas perguntas. */}
+        {!APP.playLiberada && (
+          <p className="mt-3 text-xs leading-relaxed text-white/60">
+            O Android vai pedir para permitir a instalação e pode mostrar um aviso do Play Protect — o app está em
+            análise na Google Play.{" "}
+            <a href="#perguntas" className="text-[#5ff0a3] underline underline-offset-2">
+              Veja como instalar
+            </a>
+            .
+          </p>
+        )}
       </div>
     </div>
   )

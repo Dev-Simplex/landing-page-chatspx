@@ -120,10 +120,17 @@ const PERGUNTAS: { pergunta: string; resposta: ReactNode }[] = [
             <>
               É o Play Protect. Como o Chat SPX já está cadastrado na Google Play mas ainda não foi publicado, o
               celular estranha receber o app por fora da loja. O arquivo é o mesmo que enviamos à Google. Para
-              instalar mesmo assim: abra a <strong>Play Store</strong>, toque na sua foto, vá em{" "}
-              <strong>Play Protect</strong>, abra a engrenagem e desligue{" "}
-              <strong>Analisar apps com o Play Protect</strong>. Instale o arquivo e ligue a opção de volta. Assim que
-              o app for publicado, esse aviso deixa de aparecer.
+              instalar:
+              <ol className="mt-3 list-decimal space-y-2 pl-5 text-white/75">
+                <li>Toque no arquivo baixado e permita a instalação, se o Android pedir.</li>
+                <li>
+                  Se aparecer a tela “Faça o download deste app no Google Play”, abra a <strong>Play Store</strong>,
+                  toque na sua foto, vá em <strong>Play Protect</strong>, abra a engrenagem e desligue{" "}
+                  <strong>Analisar apps com o Play Protect</strong>.
+                </li>
+                <li>Instale o arquivo e ligue a opção de volta.</li>
+              </ol>
+              <span className="mt-3 block">Assim que o app for publicado na Play, esse aviso deixa de aparecer.</span>
             </>
           ),
         },
@@ -309,7 +316,7 @@ export default function BaixarPage() {
       </section>
 
       {/* FAQ */}
-      <section className="relative z-10 mx-auto max-w-3xl px-5 py-16 sm:px-8 lg:py-24">
+      <section id="perguntas" className="relative z-10 mx-auto max-w-3xl px-5 py-16 sm:px-8 lg:py-24 scroll-mt-24">
         <h2 className="text-center text-3xl font-semibold tracking-tight sm:text-4xl">Perguntas frequentes</h2>
         <div className="mt-10 divide-y divide-white/10 rounded-2xl border border-white/10 bg-white/[0.03]">
           {PERGUNTAS.map(({ pergunta, resposta }) => (
