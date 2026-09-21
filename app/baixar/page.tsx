@@ -115,6 +115,19 @@ const PERGUNTAS: { pergunta: string; resposta: ReactNode }[] = [
           ),
         },
         {
+          pergunta: 'Apareceu "Faça o download deste app no Google Play". E agora?',
+          resposta: (
+            <>
+              É o Play Protect. Como o Chat SPX já está cadastrado na Google Play mas ainda não foi publicado, o
+              celular estranha receber o app por fora da loja. O arquivo é o mesmo que enviamos à Google. Para
+              instalar mesmo assim: abra a <strong>Play Store</strong>, toque na sua foto, vá em{" "}
+              <strong>Play Protect</strong>, abra a engrenagem e desligue{" "}
+              <strong>Analisar apps com o Play Protect</strong>. Instale o arquivo e ligue a opção de volta. Assim que
+              o app for publicado, esse aviso deixa de aparecer.
+            </>
+          ),
+        },
+        {
           pergunta: "É seguro instalar o APK?",
           resposta: (
             <>
