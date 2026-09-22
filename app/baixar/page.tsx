@@ -136,10 +136,10 @@ const PERGUNTAS: { pergunta: string; resposta: ReactNode }[] = [
           pergunta: "Já tenho o Chat SPX instalado. Preciso fazer algo?",
           resposta: (
             <>
-              Nesta versão, sim: <strong>desinstale o app antes</strong> de instalar o arquivo. Esta atualização foi
-              assinada com uma chave nova, e o Android recusa instalar por cima quando isso acontece — aparece um
-              aviso de que o app não foi instalado. Suas conversas ficam no servidor: depois de instalar, é só entrar
-              de novo com o seu usuário.
+              Se você já está na versão 4.3.3, não: é só instalar por cima. Se for uma versão anterior baixada aqui
+              (4.3.2 ou mais antiga), <strong>desinstale o app antes</strong> — aquelas versões foram assinadas com
+              outra chave, e o Android recusa instalar por cima quando isso acontece, avisando que o app não foi
+              instalado. Suas conversas ficam no servidor: depois de instalar, é só entrar de novo com o seu usuário.
             </>
           ),
         },
