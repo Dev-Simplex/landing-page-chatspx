@@ -12,7 +12,7 @@ export const APP = {
   // O botão aponta para /baixar/android, que redireciona para cá.
   apkOrigem:
     "https://github.com/Dev-Simplex/landing-page-chatspx/releases/download/android-v4.3.4/ChatSPX-4.3.4.apk",
-  apkSha256: "1a01a0f9e008c901df462940880e2062b356be07b87793579f21bfd058c84083",
+  apkSha256: "b44209fb97396cadaaa71433b7bdedf26a2aad69eb9a38c9784507f2de999b4e",
   iosMinimo: "15.1",
   androidMinimo: "7.0",
 }
